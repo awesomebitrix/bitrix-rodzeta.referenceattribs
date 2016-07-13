@@ -97,9 +97,28 @@ final class Utils {
 			}
 		}
 
+		// get all urls for catalog sections
+		$res = \CIBlockSection::GetByID(Option::get("rodzeta.referenceattribs", "catalog_section_id", 7));
+		$section = $res->GetNext();
+		$res = \CIBlockSection::GetList(
+			array("SORT" => "ASC"),
+			array(
+				"IBLOCK_ID" => $iblockId,
+			),
+			true,
+			array("UF_*")
+		);
+		$catalogSections = array();
+		while ($row = $res->GetNext()) {
+			if (substr($row["SECTION_PAGE_URL"], 0,
+						strlen($section["SECTION_PAGE_URL"])) === $section["SECTION_PAGE_URL"]) {
+				$catalogSections[$row["SECTION_PAGE_URL"]] = $row["ID"];
+			}
+		}
+
 		file_put_contents(
 			$basePath . self::MAP_NAME,
-			"<?php\nreturn " . var_export(array($attribs, $sefCodes, $groups), true) . ";"
+			"<?php\nreturn " . var_export(array($attribs, $sefCodes, $groups, $catalogSections), true) . ";"
 		);
 	}
 

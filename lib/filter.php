@@ -13,31 +13,27 @@ use \Bitrix\Main\Config\Option;
 final class Filter {
 
 	static function getIds($segments) {
-		$result = array();
+		list($attribs, $sefCodes, $groups, $catalogSections) = \Rodzeta\Referenceattribs\Utils::get();
 
-		$storage = new Storage(_APP_ROOT . "/api");
-		$allSectionUrls = $storage->get("category/routes");
-		$filterParams = [];
+		$filterParams = array();
+		// detect current section url
 		while (count($segments) > 0) {
 			$url = "/" . implode("/", $segments) . "/";
-			if (isset($allSectionUrls[$url])) {
+			if (isset($catalogSections[$url])) {
 				break;
 			}
+			// store rest segments as params
 			array_unshift($filterParams, array_pop($segments));
 		}
-		$currentSectionId = $allSectionUrls[$url];
-		unset($allSectionUrls);
+		$currentSectionId = $catalogSections[$url];
 
-		// create filter by aliases
-		$groups = [];
-		$byCode = $storage->get("catalog/dir_value_alias");
-		$byId = $storage->get("catalog/dir_values");
-
-		$selectedIds = [];
-		foreach ($filterParams as $alias) {
-			if (!isset($byCode[$alias])) {
+		// create bitrix filter params
+		// TODO ...
+		$selectedIds = array();
+		foreach ($filterParams as $code) {
+			if (!isset($sefCodes[$code])) {
 				// nonvalid param in url
-				return [false, $url, $currentSectionId];
+				return array(false, $url, $currentSectionId);
 			}
 			$param = $byId[$byCode[$alias]];
 			$groups[$param["GROUP_ID"]][] = $param["ID"];
