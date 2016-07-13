@@ -34,12 +34,13 @@ final class Utils {
 		$sefCodes = array();
 		$attribs = array();
 		$groups = array();
+		$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
 
 		// collect references types
 		$res = \CIBlockSection::GetList(
 			array("SORT" => "ASC"),
 			array(
-				"IBLOCK_ID" => Option::get("rodzeta.referenceattribs", "iblock_id", 2),
+				"IBLOCK_ID" => $iblockId,
 				"SECTION_ID" => Option::get("rodzeta.referenceattribs", "section_id", 6)
 			),
 			true,
@@ -68,7 +69,7 @@ final class Utils {
 			$res = \CIBlockSection::GetList(
 				array("SORT" => "ASC"),
 				array(
-					"IBLOCK_ID" => Option::get("rodzeta.referenceattribs", "iblock_id", 2),
+					"IBLOCK_ID" => $iblockId,
 					"SECTION_ID" => $groupId
 				),
 				true,

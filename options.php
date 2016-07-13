@@ -49,6 +49,7 @@ if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
+		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
 
 		\Rodzeta\Referenceattribs\Utils::createCache();
 
@@ -96,6 +97,15 @@ $tabControl->begin();
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<input name="section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "section_id", 6) ?>">
+		</td>
+	</tr>
+
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>ID раздела "Каталог"</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<input name="catalog_section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "catalog_section_id", 7) ?>">
 		</td>
 	</tr>
 
