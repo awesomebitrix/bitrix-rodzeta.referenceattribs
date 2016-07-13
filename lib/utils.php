@@ -48,6 +48,7 @@ final class Utils {
 		);
 		while ($row = $res->GetNext()) {
 			$attribs[$row["ID"]] = array(
+				"ID" => $row["ID"],
 				"NAME" => $row["NAME"],
 				"CODE" => $row["CODE"],
 				"DESCRIPTION" => $row["DESCRIPTION"],
@@ -77,6 +78,7 @@ final class Utils {
 			);
 			while ($row = $res->GetNext()) {
 				$attribs[$row["ID"]] = array(
+					"ID" => $row["ID"],
 					"NAME" => $row["NAME"],
 					"CODE" => $row["CODE"],
 					"DESCRIPTION" => $row["DESCRIPTION"],

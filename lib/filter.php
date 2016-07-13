@@ -12,14 +12,19 @@ use \Bitrix\Main\Config\Option;
 
 final class Filter {
 
-	static function getIds($segments) {
+	static function get($segments) {
+		if (is_string($segments)) {
+			$segments = explode("/", trim($segments, "/"));
+		}
 		list($attribs, $sefCodes, $groups, $catalogSections) = \Rodzeta\Referenceattribs\Utils::get();
 
 		$filterParams = array();
 		// detect current section url
+		$currentUrl = "/";
 		while (count($segments) > 0) {
 			$url = "/" . implode("/", $segments) . "/";
 			if (isset($catalogSections[$url])) {
+				$currentUrl = $url;
 				break;
 			}
 			// store rest segments as params
@@ -33,7 +38,7 @@ final class Filter {
 		foreach ($filterParams as $code) {
 			if (!isset($sefCodes[$code])) {
 				// nonvalid param in url
-				return array(false, $url, $currentSectionId, array());
+				return array(false, $currentUrl, $currentSectionId, array());
 			}
 			$param = $attribs[$sefCodes[$code]];
 			$selectedGroups[$param["GROUP_ID"]][] = $param["ID"];
@@ -45,20 +50,27 @@ final class Filter {
 		}
 
 		$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
-		$result = array(
-			"IBLOCK_ID" => $iblockId,
-			"INCLUDE_SUBSECTIONS" => "Y",
-			"LOGIC" => "AND",
-			$result
-		);
+		if (count($selectedGroups)) {
+			$result = array(
+				"IBLOCK_ID" => $iblockId,
+				"INCLUDE_SUBSECTIONS" => "Y",
+				"LOGIC" => "AND",
+				$result
+			);
+		} else {
+			$result = array(
+				"IBLOCK_ID" => $iblockId,
+				"INCLUDE_SUBSECTIONS" => "Y",
+			);
+		}
 		if ($currentSectionId != Option::get("rodzeta.referenceattribs", "catalog_section_id", 2)) {
-			$result["ID"] = CIBlockElement::SubQuery("ID", array(
+			$result["ID"] = \CIBlockElement::SubQuery("ID", array(
         "IBLOCK_ID" => $iblockId,
         "SECTION_ID" => $currentSectionId,
         "INCLUDE_SUBSECTIONS" => "Y",
       ));
 		}
-		return array($result, $url, $currentSectionId, $selectedIds);
+		return array($result, $currentUrl, $currentSectionId, $selectedIds);
 	}
 
 }
