@@ -32,6 +32,28 @@
         </div>
     <?php } ?>
 
+### Пример реализации ЧПУ-фильтра
+
+    list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
+    \Rodzeta\Referenceattribs\Filter::get(array(
+        "catalog", // первый элемент - всегда код раздела "Каталог"
+        "red", // значения заданные вручную
+        "green"
+    ));
+
+или для страниц раздела каталога /catalog/*
+
+    list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
+    \Rodzeta\Referenceattribs\Filter::get($APPLICATION->GetCurPage(false));
+
+    <?$APPLICATION->IncludeComponent(
+    "bitrix:catalog.section",
+    "furniture",
+    array(
+        ...
+        "FILTER_NAME" => "arrSefFilter",
+        ...
+
 ## Демо сайт
 
 http://villa-mia.ru/
