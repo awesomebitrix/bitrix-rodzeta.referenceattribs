@@ -28,37 +28,37 @@ final class Filter {
 		$currentSectionId = $catalogSections[$url];
 
 		// create bitrix filter params
-		// TODO ...
 		$selectedIds = array();
+		$selectedGroups = array();
 		foreach ($filterParams as $code) {
 			if (!isset($sefCodes[$code])) {
 				// nonvalid param in url
-				return array(false, $url, $currentSectionId);
+				return array(false, $url, $currentSectionId, array());
 			}
-			$param = $byId[$byCode[$alias]];
-			$groups[$param["GROUP_ID"]][] = $param["ID"];
+			$param = $attribs[$sefCodes[$code]];
+			$selectedGroups[$param["GROUP_ID"]][] = $param["ID"];
 			$selectedIds[$param["ID"]] = 1;
 		}
-		$result = [];
-		foreach ($groups as $ids) {
-			$result[] = ["SECTION_ID" => $ids];
+		$result = array();
+		foreach ($selectedGroups as $ids) {
+			$result[] = array("SECTION_ID" => $ids);
 		}
 
 		$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
-		$result = [
+		$result = array(
 			"IBLOCK_ID" => $iblockId,
 			"INCLUDE_SUBSECTIONS" => "Y",
 			"LOGIC" => "AND",
 			$result
-		];
-		if ($currentSectionId != self::CATALOG_SECTION_ID) {
-			$result["ID"] = CIBlockElement::SubQuery("ID", [
+		);
+		if ($currentSectionId != Option::get("rodzeta.referenceattribs", "catalog_section_id", 2)) {
+			$result["ID"] = CIBlockElement::SubQuery("ID", array(
         "IBLOCK_ID" => $iblockId,
         "SECTION_ID" => $currentSectionId,
         "INCLUDE_SUBSECTIONS" => "Y",
-      ]);
+      ));
 		}
-		return [$result, $url, $currentSectionId, $selectedIds];
+		return array($result, $url, $currentSectionId, $selectedIds);
 	}
 
 }
