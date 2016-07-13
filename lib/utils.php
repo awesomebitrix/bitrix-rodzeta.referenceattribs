@@ -39,8 +39,8 @@ final class Utils {
 		$res = \CIBlockSection::GetList(
 			array("SORT" => "ASC"),
 			array(
-				"IBLOCK_ID" => Option::get("rodzeta.siteoptions", "iblock_id", 2),
-				"SECTION_ID" => Option::get("rodzeta.siteoptions", "section_id", 6)
+				"IBLOCK_ID" => Option::get("rodzeta.referenceattribs", "iblock_id", 2),
+				"SECTION_ID" => Option::get("rodzeta.referenceattribs", "section_id", 6)
 			),
 			true,
 			array("UF_*")
@@ -68,7 +68,7 @@ final class Utils {
 			$res = \CIBlockSection::GetList(
 				array("SORT" => "ASC"),
 				array(
-					"IBLOCK_ID" => Option::get("rodzeta.siteoptions", "iblock_id", 2),
+					"IBLOCK_ID" => Option::get("rodzeta.referenceattribs", "iblock_id", 2),
 					"SECTION_ID" => $groupId
 				),
 				true,
