@@ -48,7 +48,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
-		Option::set("rodzeta.referenceattribs", "section_code", $request->getPost("section_code"));
+		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
 		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
 
 		\Rodzeta\Referenceattribs\Utils::createCache();
@@ -105,8 +105,8 @@ $tabControl->begin();
 			<label>ID раздела "Справочники"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="section_code" type="text" value="RODZETA_REFERENCE" readonly>
-			<?php /* <?= Option::get("rodzeta.referenceattribs", "section_code") ?> */ ?>
+			<input name="section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "section_id") ?>">
+
 		</td>
 	</tr>
 

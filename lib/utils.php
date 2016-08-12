@@ -37,13 +37,13 @@ final class Utils {
 		$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
 
 		// collect references types
-		$sectionCode = Option::get("rodzeta.referenceattribs", "section_code");
-		if ($sectionCode != "") {
+		$sectionId = Option::get("rodzeta.referenceattribs", "section_id");
+		if ($sectionId != "") {
 			$res = \CIBlockSection::GetList(
 				array("SORT" => "ASC"),
 				array(
 					"IBLOCK_ID" => $iblockId,
-					"CODE" => $sectionCode,
+					"SECTION_ID" => $sectionId,
 					"ACTIVE" => "Y",
 				),
 				true,
@@ -68,6 +68,7 @@ final class Utils {
 				}
 			}
 		}
+
 		// collect references values
 		foreach ($attribs as $groupId => $v) {
 			$res = \CIBlockSection::GetList(
