@@ -18,8 +18,5 @@ EventManager::getInstance()->addEventHandler("main", "OnBeforeProlog", function 
 	if (CSite::InDir("/bitrix/")) {
 		return;
 	}
-
-	//...
-
 });
 */
