@@ -43,7 +43,8 @@ final class Utils {
 				array("SORT" => "ASC"),
 				array(
 					"IBLOCK_ID" => $iblockId,
-					"SECTION_CODE" => $sectionCode
+					"CODE" => $sectionCode,
+					"ACTIVE" => "Y",
 				),
 				true,
 				array("UF_*")
@@ -73,7 +74,8 @@ final class Utils {
 				array("SORT" => "ASC"),
 				array(
 					"IBLOCK_ID" => $iblockId,
-					"SECTION_ID" => $groupId
+					"SECTION_ID" => $groupId,
+					"ACTIVE" => "Y",
 				),
 				true,
 				array("UF_*")
@@ -108,6 +110,7 @@ final class Utils {
 			array("SORT" => "ASC"),
 			array(
 				"IBLOCK_ID" => $iblockId,
+				"ACTIVE" => "Y",
 			),
 			true,
 			array("UF_*")
