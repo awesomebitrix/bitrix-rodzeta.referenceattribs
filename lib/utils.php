@@ -37,34 +37,36 @@ final class Utils {
 		$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
 
 		// collect references types
-		$res = \CIBlockSection::GetList(
-			array("SORT" => "ASC"),
-			array(
-				"IBLOCK_ID" => $iblockId,
-				"SECTION_ID" => Option::get("rodzeta.referenceattribs", "section_id", 6)
-			),
-			true,
-			array("UF_*")
-		);
-		while ($row = $res->GetNext()) {
-			$attribs[$row["ID"]] = array(
-				"ID" => $row["ID"],
-				"NAME" => $row["NAME"],
-				"CODE" => $row["CODE"],
-				"DESCRIPTION" => $row["DESCRIPTION"],
-				"DETAIL_PICTURE" => $row["DETAIL_PICTURE"],
-				"PICTURE" => $row["PICTURE"],
+		$sectionCode = Option::get("rodzeta.referenceattribs", "section_code");
+		if ($sectionCode != "") {
+			$res = \CIBlockSection::GetList(
+				array("SORT" => "ASC"),
+				array(
+					"IBLOCK_ID" => $iblockId,
+					"SECTION_CODE" => $sectionCode
+				),
+				true,
+				array("UF_*")
 			);
-			$sefCodes[$row["CODE"]] = $row["ID"];
+			while ($row = $res->GetNext()) {
+				$attribs[$row["ID"]] = array(
+					"ID" => $row["ID"],
+					"NAME" => $row["NAME"],
+					"CODE" => $row["CODE"],
+					"DESCRIPTION" => $row["DESCRIPTION"],
+					"DETAIL_PICTURE" => $row["DETAIL_PICTURE"],
+					"PICTURE" => $row["PICTURE"],
+				);
+				$sefCodes[$row["CODE"]] = $row["ID"];
 
-			// add UF_ fields
-			foreach ($row as $k => $v) {
-				if (substr($k, 0, 3) == "UF_") {
-					$attribs[$row["ID"]][$k] = $row["~" . $k];
+				// add UF_ fields
+				foreach ($row as $k => $v) {
+					if (substr($k, 0, 3) == "UF_") {
+						$attribs[$row["ID"]][$k] = $row["~" . $k];
+					}
 				}
 			}
 		}
-
 		// collect references values
 		foreach ($attribs as $groupId => $v) {
 			$res = \CIBlockSection::GetList(

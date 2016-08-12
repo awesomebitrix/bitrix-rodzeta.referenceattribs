@@ -48,7 +48,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 if ($request->isPost() && check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
-		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
+		Option::set("rodzeta.referenceattribs", "section_code", $request->getPost("section_code"));
 		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
 
 		\Rodzeta\Referenceattribs\Utils::createCache();
@@ -71,7 +71,7 @@ $tabControl->begin();
 
 ?>
 
-<form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?> type="get">
+<form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?>" type="get">
 	<?= bitrix_sessid_post() ?>
 
 	<?php $tabControl->beginNextTab() ?>
@@ -84,10 +84,19 @@ $tabControl->begin();
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>ID инфоблока "Справочники"</label>
+			<label>Инфоблок содержащий "Справочники"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input class="input" type="text" size="4" name="iblock_id" value="<?= Option::get("rodzeta.referenceattribs", "iblock_id", 2) ?>">
+			<?= GetIBlockDropDownListEx(
+				Option::get("rodzeta.referenceattribs", "iblock_id", 2),
+				"iblock_type_id",
+				"iblock_id",
+				array(
+					"MIN_PERMISSION" => "R",
+				),
+				"",
+				""
+			) ?>
 		</td>
 	</tr>
 
@@ -96,7 +105,8 @@ $tabControl->begin();
 			<label>ID раздела "Справочники"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "section_id", 6) ?>">
+			<input name="section_code" type="text" value="RODZETA_REFERENCE" readonly>
+			<?php /* <?= Option::get("rodzeta.referenceattribs", "section_code") ?> */ ?>
 		</td>
 	</tr>
 
