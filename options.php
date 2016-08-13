@@ -71,6 +71,24 @@ $tabControl->begin();
 
 ?>
 
+<script>
+
+function RodzetaReferenceattribsUpdate($selectDest) {
+	var $selectIblock = document.getElementById("iblock_id");
+	var iblockId = $selectIblock.value;
+	var selectedOption = $selectDest.getAttribute("data-value");
+	BX.ajax.loadJSON("/bitrix/admin/rodzeta.referenceattribs/sectionoptions.php?iblock_id=" + iblockId, function (data) {
+		var html = ["<option value=''>(выберите раздел)</option>"];
+		for (var k in data) {
+			var selected = selectedOption == k? "selected" : "";
+			html.push("<option " + selected + " value='" + k + "'>" + data[k] + "</option>");
+		}
+		$selectDest.innerHTML = html.join("\n");
+	});
+};
+
+</script>
+
 <form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?>" type="get">
 	<?= bitrix_sessid_post() ?>
 
@@ -95,27 +113,32 @@ $tabControl->begin();
 					"MIN_PERMISSION" => "R",
 				),
 				"",
-				""
+				"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-section-id'));RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
 			) ?>
 		</td>
 	</tr>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>ID раздела "Справочники"</label>
+			<label>Раздел "Справочники"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "section_id") ?>">
-
+			<select name="section_id" id="rodzeta-referenceattribs-section-id"
+					data-value="<?= Option::get("rodzeta.referenceattribs", "section_id") ?>">
+				<option value="">(выберите раздел)</option>
+			</select>
 		</td>
 	</tr>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>ID раздела "Каталог"</label>
+			<label>Раздел "Каталог"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<input name="catalog_section_id" type="text" size="4" value="<?= Option::get("rodzeta.referenceattribs", "catalog_section_id", 7) ?>">
+			<select name="catalog_section_id" id="rodzeta-referenceattribs-catalogsection-id"
+					data-value="<?= Option::get("rodzeta.referenceattribs", "catalog_section_id", 7) ?>">
+				<option value="">(выберите раздел)</option>
+			</select>
 		</td>
 	</tr>
 
@@ -126,6 +149,13 @@ $tabControl->begin();
   <input class="adm-btn-save" type="submit" name="save" value="Применить настройки">
 
 </form>
+
+<script>
+
+RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
+RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-catalogsection-id"));
+
+</script>
 
 <?php
 

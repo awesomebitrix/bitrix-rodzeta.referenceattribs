@@ -49,12 +49,33 @@ class rodzeta_referenceattribs extends CModule {
 		$this->PARTNER_URI = "http://rodzeta.ru/";
 	}
 
+	function InstallFiles() {
+		CopyDirFiles(
+	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/admin/" . $this->MODULE_ID,
+	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/" . $this->MODULE_ID,
+	    true, true
+    );
+    // copy example if not exists
+		//$fname = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->MODULE_ID . ".csv";
+		//if (!file_exists($fname)) {
+		//	copy($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/" . $this->MODULE_ID . ".csv", $fname);
+		//}
+		return true;
+	}
+
+	function UnInstallFiles() {
+		DeleteDirFilesEx("/bitrix/admin/" . $this->MODULE_ID);
+		return true;
+	}
+
 	function DoInstall() {
 		ModuleManager::registerModule($this->MODULE_ID);
 		RegisterModuleDependences("main", "OnPageStart", $this->MODULE_ID);
+		$this->InstallFiles();
 	}
 
 	function DoUninstall() {
+		$this->UnInstallFiles();
 		UnRegisterModuleDependences("main", "OnPageStart", $this->MODULE_ID);
 		ModuleManager::unregisterModule($this->MODULE_ID);
 	}
