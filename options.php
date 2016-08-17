@@ -50,6 +50,8 @@ if ($request->isPost() && check_bitrix_sessid()) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
 		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
+		Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
+		Option::set("rodzeta.referenceattribs", "use_options_links", $request->getPost("use_options_links"));
 
 		\Rodzeta\Referenceattribs\Utils::createCache();
 
@@ -94,11 +96,9 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 	<?php $tabControl->beginNextTab() ?>
 
-	<?php /*
 	<tr class="heading">
 		<td colspan="2">Настройки для свойств-справочников</td>
 	</tr>
-	*/ ?>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
@@ -139,6 +139,30 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 					data-value="<?= Option::get("rodzeta.referenceattribs", "catalog_section_id", 7) ?>">
 				<option value="">(выберите раздел)</option>
 			</select>
+		</td>
+	</tr>
+
+	<tr class="heading">
+		<td colspan="2">Настройки для фильтра</td>
+	</tr>
+
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>Применять фильтр при изменении опций</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<input name="filter_onchange" value="Y" type="checkbox"
+				<?= Option::get("rodzeta.referenceattribs", "filter_onchange") == "Y"? "checked" : "" ?>>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>Прописывать опции ссылками (для перелинковки)</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<input name="use_options_links" value="Y" type="checkbox"
+				<?= Option::get("rodzeta.referenceattribs", "use_options_links") == "Y"? "checked" : "" ?>>
 		</td>
 	</tr>
 
