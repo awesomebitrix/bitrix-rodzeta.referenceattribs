@@ -55,16 +55,17 @@ class rodzeta_referenceattribs extends CModule {
 	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/" . $this->MODULE_ID,
 	    true, true
     );
-    // copy example if not exists
-		//$fname = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->MODULE_ID . ".csv";
-		//if (!file_exists($fname)) {
-		//	copy($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/" . $this->MODULE_ID . ".csv", $fname);
-		//}
+    CopyDirFiles(
+	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/components/rodzeta/catalog.filtersef",
+	    $_SERVER["DOCUMENT_ROOT"] . "/bitrix/components/rodzeta/catalog.filtersef",
+	    true, true
+    );
 		return true;
 	}
 
 	function UnInstallFiles() {
 		DeleteDirFilesEx("/bitrix/admin/" . $this->MODULE_ID);
+		DeleteDirFilesEx("/bitrix/components/rodzeta/catalog.filtersef");
 		return true;
 	}
 
