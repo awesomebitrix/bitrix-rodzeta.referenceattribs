@@ -14,8 +14,8 @@ foreach ($directoryGroups as $group => $values) {
 		"GROUP" => &$directoryValues[$group],
 		"VALUE" => null,
 	);
-	foreach ($values as $id) {
-		$arResult["ITEMS"][$groupName]["VALUE"][$id] = &$directoryValues[$id];
+	foreach ($values as $id => $v) {
+    $arResult["ITEMS"][$groupName]["VALUE"][$id] = &$directoryValues[$id];
 	}
 }
 

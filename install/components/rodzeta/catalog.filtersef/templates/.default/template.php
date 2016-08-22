@@ -1,16 +1,13 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 
 <?php
+use Bitrix\Main\Config\Option;
 
 // $arParams
 
 if (empty($arResult["ITEMS"])) {
   return;
 }
-
-echo "<pre>";
-print_r($arResult["ITEMS"]);
-echo "</pre>";
 
 ?>
 
@@ -22,37 +19,36 @@ echo "</pre>";
 	    data-category="<?= $arResult["CURRENT_SECTION_ID"] ?>"
 	    data-category-query="">
 
-	  <div class="obj-search-top-buttons-container">
-	    <div class="obj-search-top-buttons">
-	      <a href="javascript:void(0);" data-value="164" class="active">Купить</a>
-	      <a class="popup-form" href="#sell-form">Продать</a>
-	      <a href="javascript:void(0);" data-value="166">Аренда</a>
-	    </div>
-	  </div>
-
 	  <div class="form-container">
 
-	    <?php foreach ($arResult["ITEMS"] as $requestParamName => $paramValues) {
-	        $field = &$configEntityAttribs[$paramValues["CODE"]]; // TODO move filtering params to component
-	        if (empty($field["FILTER"])) {
-	          continue;
-	        }
-	      ?>
+			<?php foreach ($arResult["ITEMS"] as $groupName => $v) { ?>
 
-	      <div class="form-field js-filter-param js-filter-param-<?= $field["CODE"] ?>">
+        <div class="form-field js-filter-param js-filter-param-<?= $value["CODE"] ?>">
 
-	        <?php /*
-	        <span class="js-filter-unit"><?= !empty($field["UNIT"])?
-	          (" (" . $field["UNIT"] . ")") : "" ?></span>
-	          */ ?>
+					<div class="js-field-checkbox">
+						<label><?= $groupName ?></label>
 
-	        <?php include "product_filter_input_" . basename($field["TYPE"]) . ".php" ?>
+					  <?php foreach ($v["VALUE"] as $id => $value) {
+		        	$checked = isset($arResult["SELECTED"][$id])? "checked" : "";
+		        ?>
+			      	<label>
+			      		<input type="checkbox" class="js-filter-by-url" <?= $selected ?>
+				          data-field-id="<?= $id ?>"
+				          data-slug="<?= $value["CODE"] ?>"
+				          value="<?= $id ?>">
+				        <?php if (Option::get("rodzeta.referenceattribs", "use_options_links") == "Y") { ?>
+			         		<a href="<?= $value["CURRENT_URL"] ?>"><?= $value["NAME"] ?></a>
+			    			<?php } else { ?>
+			    				<?= $value["NAME"] ?>
+			    			<?php } ?>
+			        </label>
+			    	<?php } ?>
 
-	      </div>
+					</div>
 
-	      <?php //var_dump($requestParamName, $paramValues, $_REQUEST[$requestParamName]); ?>
+			  </div>
 
-	    <?php } ?>
+		  <?php } ?>
 
 	    <?php if ($arResult["IS_CATALOG_PAGE"]) { ?>
 	      <div class="form-field more-dropdown-field hidden">
@@ -80,3 +76,10 @@ echo "</pre>";
 	</form>
 
 </div>
+
+
+<?php
+
+echo "<pre>";
+print_r($arResult["ITEMS"]);
+echo "</pre>";
