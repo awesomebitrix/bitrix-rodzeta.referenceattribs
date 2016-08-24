@@ -130,6 +130,14 @@ final class Utils {
 		);
 	}
 
+	static function getUrl($segments, $param) {
+		$tmp = array_flip($segments);
+		if (!isset($segments[$param])) {
+			$tmp[] = $param;
+		}
+		return "/" . implode("/", $tmp) . "/";
+	}
+
 	static function get() {
 		return include $_SERVER["DOCUMENT_ROOT"] . self::MAP_NAME;
 	}
