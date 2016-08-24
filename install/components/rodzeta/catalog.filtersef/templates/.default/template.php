@@ -75,6 +75,4 @@ if (empty($arResult["ITEMS"])) {
 
 <?php
 
-echo "<pre>";
-print_r($arResult["ITEMS"]);
-echo "</pre>";
+// echo "<pre>"; print_r($arResult["ITEMS"]); echo "</pre>";

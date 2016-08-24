@@ -10,8 +10,13 @@ $arResult["ITEMS"] = array();
 
 list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Utils::get();
 
-$currentUrlSegments = array_flip(array_filter(explode("/", $APPLICATION->GetCurPage())));
+$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
+$arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
+$arResult["CURRENT_SECTION_ID"] = null;
+$arResult["SELECTED_VALUES"] = array();
+$GLOBALS["RODZETA_CATALOG_FILTER"] = array();
 
+$currentUrlSegments = array_flip(array_filter(explode("/", $arResult["CURRENT_SECTION_URL"])));
 foreach ($directoryGroups as $group => $values) {
 	$groupName = $directoryValues[$group]["NAME"];
 	$arResult["ITEMS"][$groupName] = array(
@@ -24,66 +29,26 @@ foreach ($directoryGroups as $group => $values) {
 	}
 }
 
-$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
-$arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
-$arResult["CURRENT_SECTION_ID"] = null;
-
 if (defined("ERROR_404")) {
   // init params for filter
-  $notFound = true;
-  // init with filter from url
-
   list($filter, $currentUrl, $currentSectionId, $selectedIds) = \Rodzeta\Referenceattribs\Filter::get($arResult["CURRENT_SECTION_URL"]);
   if ($filter !== false) {
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
     $arResult["SELECTED_VALUES"] = $selectedIds;
+    $GLOBALS["RODZETA_CATALOG_FILTER"] = $filter;
 
-    // var_dump($filter);
+    //CHTTP::SetStatus("200 OK");
 
     /*
-    $productIds = [];
-    // filter by url
-
-    //Log::info($filter, "filter");
-
-    // products by seo filter
-    foreach (Entity::select($filter, ["ID"]) as $row) {
-      //echo "<pre>"; print_r($row); echo "</pre>";
-      $productIds[] = $row["ID"];
-    }
-    //Log::info($productIds, "product ids");
-
-    // filter by attribs
     if (count($productIds) > 0) {
-      $productIdsByAttribs = EntityFilter::filterByAttribs($_GET, ["p.ID" => $productIds]);
-      if ($productIdsByAttribs !== null) {
-        $productIds = $productIdsByAttribs;
-      }
-    }
-
-    if (count($productIds) > 0) {
-      // or use
-      // $filteredIds = [];
-      // foreach (Entity::select([
-      //        "IBLOCK_ID" => EntityFilter::SITECONTENT_IBLOCK_ID,
-      //        "SECTION_ID" => $currentSectionId,
-      //        "INCLUDE_SUBSECTIONS" => "Y",
-      //      ]) as $row) {
-      //    $filteredIds = $row["ID"];
-      // }
-      // $productIds = array_intersect($filteredIds, $productIds);
-
-      // FIX template urls for filter pages
-      //$arResult["FOLDER"] = $currentUrl;
-      //$arResult["VARIABLES"]["SECTION_CODE"] = ...;
       $arResult["URL_TEMPLATES"]["section"] = "catalog/";
       $arResult["URL_TEMPLATES"]["element"] = "catalog/#ELEMENT_CODE#/";
       //var_dump($arResult["FOLDER"], $arResult["URL_TEMPLATES"]);
 
       // FIX set status ok
-      CHTTP::SetStatus("200 OK");
-      $notFound = false;
+
+
 
       $hideSectionList = true;
 
