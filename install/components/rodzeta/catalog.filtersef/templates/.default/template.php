@@ -12,9 +12,9 @@ if (empty($arResult["ITEMS"])) {
 
 <div class="obj-search-form-container">
 
-	<form id="<?= $arResult["IS_CATALOG_PAGE"]? "obj-search-form" : "obj-search-form-brief" ?>"
+	<form id="obj-search-form"
 	    class="form-inline wrapper-wide js-catalog-filter" action="" method="get"
-	    data-category-url="<?= $arResult["CURRENT_URL"] ?>"
+	    data-category-url="<?= $arResult["CURRENT_SECTION_URL"] ?>"
 	    data-category="<?= $arResult["CURRENT_SECTION_ID"] ?>"
 	    data-category-query="">
 
@@ -28,10 +28,10 @@ if (empty($arResult["ITEMS"])) {
 						<label><?= $groupName ?></label>
 
 					  <?php foreach ($v["VALUE"] as $id => $value) {
-		        	$checked = isset($arResult["SELECTED"][$id])? "checked" : "";
+					  	$checked = !empty($arResult["SELECTED_VALUES"][$id])? "checked" : "";
 		        ?>
 			      	<label>
-			      		<input type="checkbox" class="js-filter-by-url" <?= $selected ?>
+			      		<input type="checkbox" class="js-filter-by-url" <?= $checked ?>
 				          data-field-id="<?= $id ?>"
 				          data-slug="<?= $value["CODE"] ?>"
 				          value="<?= $id ?>">
@@ -49,15 +49,9 @@ if (empty($arResult["ITEMS"])) {
 
 		  <?php } ?>
 
-	    <?php /*if ($arResult["IS_CATALOG_PAGE"]) { ?>
-	      <div class="form-field more-dropdown-field hidden">
-	        <a class="more-dropdown-link" href="#">Еще</a>
-	      </div>
-	    <?php }*/ ?>
-
 	    <div class="form-field">
 	      <input class="btn-secondary-white btn-filter-apply" value="Подобрать" type="submit">
-	      <?php /* <a href="<?= $arResult["CURRENT_URL"] ?>" class="btn-filter-reset btn">Сбросить</a> */ ?>
+	      <?php /* <a href="<?= $arResult["CURRENT_SECTION_URL"] ?>" class="btn-filter-reset btn">Сбросить</a> */ ?>
 	    </div>
 	  </div>
 
@@ -69,8 +63,10 @@ if (empty($arResult["ITEMS"])) {
 	  <?php } ?>
 	  */ ?>
 
+	  <?php /*
 	  <input type="hidden" class="input-products-sorting-by" name="sortby" value="">
 	  <input type="hidden" class="input-products-sorting-d" name="sortd" value="">
+	  */ ?>
 
 	</form>
 
