@@ -1,7 +1,6 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();?>
 
 <?php
-use Bitrix\Main\Config\Option;
 
 // $arParams
 
@@ -36,8 +35,8 @@ if (empty($arResult["ITEMS"])) {
 				          data-field-id="<?= $id ?>"
 				          data-slug="<?= $value["CODE"] ?>"
 				          value="<?= $id ?>">
-				        <?php if (Option::get("rodzeta.referenceattribs", "use_options_links") == "Y") { ?>
-			         		<a href="<?= $value["CURRENT_URL"] ?>"><?= $value["NAME"] ?></a>
+				        <?php if ($arResult["USE_OPTIONS_LINKS"] == "Y") { ?>
+			         		<a href="<?= $v["LINK"][$id] ?>"><?= $value["NAME"] ?></a>
 			    			<?php } else { ?>
 			    				<?= $value["NAME"] ?>
 			    			<?php } ?>
@@ -50,11 +49,11 @@ if (empty($arResult["ITEMS"])) {
 
 		  <?php } ?>
 
-	    <?php if ($arResult["IS_CATALOG_PAGE"]) { ?>
+	    <?php /*if ($arResult["IS_CATALOG_PAGE"]) { ?>
 	      <div class="form-field more-dropdown-field hidden">
 	        <a class="more-dropdown-link" href="#">Еще</a>
 	      </div>
-	    <?php } ?>
+	    <?php }*/ ?>
 
 	    <div class="form-field">
 	      <input class="btn-secondary-white btn-filter-apply" value="Подобрать" type="submit">

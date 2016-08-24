@@ -1,5 +1,7 @@
 <? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
+use Bitrix\Main\Config\Option;
+
 //$path = $this->GetPath();
 
 // $arParams
@@ -7,6 +9,8 @@
 $arResult["ITEMS"] = array();
 
 list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Utils::get();
+
+$currentUrlSegments = array_flip(array_filter(explode("/", $APPLICATION->GetCurPage())));
 
 foreach ($directoryGroups as $group => $values) {
 	$groupName = $directoryValues[$group]["NAME"];
@@ -16,7 +20,14 @@ foreach ($directoryGroups as $group => $values) {
 	);
 	foreach ($values as $id => $v) {
     $arResult["ITEMS"][$groupName]["VALUE"][$id] = &$directoryValues[$id];
+    $arResult["ITEMS"][$groupName]["LINK"][$id] = \Rodzeta\Referenceattribs\Utils::getUrl($currentUrlSegments, $directoryValues[$id]["CODE"]);
 	}
+}
+
+$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
+
+if (defined("ERROR_404")) {
+  // init params for filter
 }
 
 // sort by name
@@ -128,15 +139,6 @@ if (!empty($arParams["FILTER_NAME"])) {
 $APPLICATION->SetAdditionalCSS("/bower_components/ion.rangeSlider/css/ion.rangeSlider.css");
 $APPLICATION->SetAdditionalCSS("/bower_components/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css");
 
-$currentUrlSegments = array_flip(array_filter(explode("/", $APPLICATION->GetCurPage())));
-
-$makeUrlWithParam = function ($segments, $param) {
-	$tmp = array_flip($segments);
-	if (!isset($segments[$param])) {
-		$tmp[] = $param;
-	}
-	return "/" . implode("/", $tmp) . "/";
-};
 */
 
 $this->IncludeComponentTemplate();
