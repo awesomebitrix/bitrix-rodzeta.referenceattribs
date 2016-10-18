@@ -21,9 +21,9 @@ if (empty($arResult["ITEMS"])) {
 	  <div class="form-container">
 
 			<?php foreach ($arResult["ITEMS"] as $groupName => $v) {
-				$paramTemplate = !empty($v["GROUP"]["UF_INPUT_TYPE"])? $v["GROUP"]["UF_INPUT_TYPE"] : "SELECT";
+				$paramTemplate = !empty($v["GROUP"]["UF_INPUT_TYPE"])? basename($v["GROUP"]["UF_INPUT_TYPE"]) : "SELECT";
 			?>
-				<?php include __DIR__ . "/partial/" . basename($paramTemplate) . ".php" ?>
+				<?php include __DIR__ . "/partial/" . $paramTemplate . ".php" ?>
 		  <?php } ?>
 
 	    <div class="form-field">
