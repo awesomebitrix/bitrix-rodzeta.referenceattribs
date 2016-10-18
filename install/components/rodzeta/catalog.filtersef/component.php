@@ -29,7 +29,7 @@ foreach ($directoryGroups as $group => $values) {
 	}
 }
 
-if (defined("ERROR_404")) {
+if (defined("ERROR_404")) { // section with filter
   // init params for filter
   list($filter, $currentUrl, $currentSectionId, $selectedIds) = \Rodzeta\Referenceattribs\Filter::get($arResult["CURRENT_SECTION_URL"]);
   if ($filter !== false) {
@@ -65,6 +65,17 @@ if (defined("ERROR_404")) {
     */
   }
 
+} else { // section url
+  if (isset($sectionsPaths[$arResult["CURRENT_SECTION_URL"]])) {
+    $arResult["CURRENT_SECTION_ID"] = $sectionsPaths[$arResult["CURRENT_SECTION_URL"]];
+  }
+}
+
+// filter params for current section
+foreach ($arResult["ITEMS"] as $groupName => $v) {
+  if (empty($v["GROUP"]["UF_SECTIONS"]) || !in_array($arResult["CURRENT_SECTION_ID"], $v["GROUP"]["UF_SECTIONS"])) {
+    unset($arResult["ITEMS"][$groupName]);
+  }
 }
 
 // sort by name
@@ -78,14 +89,7 @@ if (defined("ERROR_404")) {
 
 /*
 
-
 // init by current category
-
-//	$filter = null;
-//	$currentUrl = $APPLICATION->GetCurPage();
-//	$currentSectionId = $arResult["VARIABLES"]["SECTION_ID"];
-//  $selectedIds = [];
-
 
 $filterParams = $storage->get("filter/" . $currentSectionId . "_params");
 
