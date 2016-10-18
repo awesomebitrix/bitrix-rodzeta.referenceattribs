@@ -20,33 +20,10 @@ if (empty($arResult["ITEMS"])) {
 
 	  <div class="form-container">
 
-			<?php foreach ($arResult["ITEMS"] as $groupName => $v) { ?>
-
-        <div class="form-field js-filter-param js-filter-param-<?= $value["CODE"] ?>">
-
-					<div class="js-field-checkbox">
-						<label><?= $groupName ?></label>
-
-					  <?php foreach ($v["VALUE"] as $id => $value) {
-					  	$checked = !empty($arResult["SELECTED_VALUES"][$id])? "checked" : "";
-		        ?>
-			      	<label>
-			      		<input type="checkbox" class="js-filter-by-url" <?= $checked ?>
-				          data-field-id="<?= $id ?>"
-				          data-slug="<?= $value["CODE"] ?>"
-				          value="<?= $id ?>">
-				        <?php if ($arResult["USE_OPTIONS_LINKS"] == "Y") { ?>
-			         		<a href="<?= $v["LINK"][$id] ?>"><?= $value["NAME"] ?></a>
-			    			<?php } else { ?>
-			    				<?= $value["NAME"] ?>
-			    			<?php } ?>
-			        </label>
-			    	<?php } ?>
-
-					</div>
-
-			  </div>
-
+			<?php foreach ($arResult["ITEMS"] as $groupName => $v) {
+				$paramTemplate = !empty($v["GROUP"]["UF_INPUT_TYPE"])? $v["GROUP"]["UF_INPUT_TYPE"] : "SELECT";
+			?>
+				<?php include __DIR__ . "/partial/" . basename($paramTemplate) . ".php" ?>
 		  <?php } ?>
 
 	    <div class="form-field">
