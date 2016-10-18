@@ -10,7 +10,7 @@ $arResult["ITEMS"] = array();
 
 list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Utils::get();
 
-$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
+//$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
 $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = array();

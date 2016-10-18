@@ -11,12 +11,7 @@
           data-field-id="<?= $id ?>"
           data-slug="<?= $value["CODE"] ?>"
           value="<?= $id ?>">
-        <?php if ($arResult["USE_OPTIONS_LINKS"] == "Y") { ?>
-       		<a href="<?= $v["LINK"][$id] ?>"><?= $value["NAME"] ?></a>
-  			<?php } else { ?>
-  				<?= $value["NAME"] ?>
-  				<a href="<?= $v["LINK"][$id] ?>" style="display:none;"><?= $value["NAME"] ?></a>
-  			<?php } ?>
+       	<span class="js-filter-link"><a href="<?= $v["LINK"][$id] ?>"><?= $value["NAME"] ?></a></span>
       </label>
   	<?php } ?>
 	</div>
