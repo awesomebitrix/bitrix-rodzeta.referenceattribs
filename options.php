@@ -158,7 +158,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Прописывать опции ссылками (для перелинковки)</label>
+			<label>Прописывать опции ссылками</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<input name="use_options_links" value="Y" type="checkbox"
