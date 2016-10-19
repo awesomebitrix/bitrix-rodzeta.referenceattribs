@@ -24,11 +24,13 @@
         $arResult["VARIABLES"]["SECTION_CODE"] = null;
     }
 
-код должен быть после компонента фильтра но перед компонентом "bitrix:catalog.section" или другим подобным компонентом
+код должен быть после компонента фильтр, но перед компонентом "bitrix:catalog.section" или другим подобным компонентом
 
 см. пример bitrix\modules\rodzeta.referenceattribs\examples\section.php
 
 ### Пример реализации ЧПУ-фильтра - использование без компонента
+
+c явным заданием значений для фильтрации
 
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
     \Rodzeta\Referenceattribs\Filter::get(array(
@@ -67,7 +69,7 @@
 
 ## Описание техподдержки и контактных данных
 
-Оказывается на платной основе, e-mail: rivetweb@yandex.ru
+Тех. поддержка и кастомизация оказывается на платной основе, e-mail: rivetweb@yandex.ru
 
 Багрепорты и предложения на https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/issues
 
@@ -76,4 +78,3 @@
 ## Ссылка на демо-версию
 
 http://villa-mia.ru/
-
