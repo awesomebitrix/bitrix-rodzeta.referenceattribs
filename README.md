@@ -34,6 +34,14 @@
         CHTTP::SetStatus("200 OK");
     }
 
+- прописать параметр SEF_URL_TEMPLATES в настройках компонента "bitrix:catalog.section"
+
+    "SEF_URL_TEMPLATES" => array(
+            "sections" => "",
+            "section" => "#SECTION_CODE_PATH#/",
+            "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
+    ...
+
 ### Пример реализации ЧПУ-фильтра - использование без компонента
 
 c явным заданием значений для фильтрации
