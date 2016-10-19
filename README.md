@@ -26,6 +26,8 @@
 
 код должен быть после компонента фильтра но перед компонентом "bitrix:catalog.section" или другим подобным компонентом
 
+см. пример bitrix\modules\rodzeta.referenceattribs\examples\section.php
+
 ### Пример реализации ЧПУ-фильтра - использование без компонента
 
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
