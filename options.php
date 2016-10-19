@@ -33,6 +33,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 
 ?>
 
+<?php /*
 <?= BeginNote() ?>
 <p>
 	<b>Как работает</b>
@@ -42,6 +43,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
 	</ul>
 </p>
 <?= EndNote() ?>
+*/ ?>
 
 <?php
 
