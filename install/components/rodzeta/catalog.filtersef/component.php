@@ -1,4 +1,11 @@
-<? if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<?php
+/***********************************************************************************************
+ * rodzeta.referenceattribs - Infoblock element reference attributes
+ * Copyright 2016 Semenov Roman
+ * MIT License
+ ************************************************************************************************/
+
+if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
 use Bitrix\Main\Config\Option;
 
