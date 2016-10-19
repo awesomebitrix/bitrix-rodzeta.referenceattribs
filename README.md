@@ -15,7 +15,7 @@
 
 ### Пример использования компонента фильтра со стандартным компонентом "Каталог"
 
-- добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\section.php) код
+добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\section.php) код
 
     if (!empty($GLOBALS["RODZETA_CATALOG_FILTER"])) {
         $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
@@ -27,14 +27,14 @@
 код должен быть после компонента фильтра, но перед компонентом "bitrix:catalog.section" или другим подобным компонентом,
 см. пример bitrix\modules\rodzeta.referenceattribs\examples\section.php
 
-- добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\bitrix\catalog.section\.default\result_modifier.php)
+добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\bitrix\catalog.section\.default\result_modifier.php)
 
     if (count($arResult["ITEMS"])) {
         // если есть результат по чпу-фильтру - установить статус OK
         CHTTP::SetStatus("200 OK");
     }
 
-- прописать параметр SEF_URL_TEMPLATES в настройках компонента "bitrix:catalog.section"
+прописать параметр SEF_URL_TEMPLATES в настройках компонента "bitrix:catalog.section"
 
     "SEF_URL_TEMPLATES" => array(
             "sections" => "",
