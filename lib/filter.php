@@ -16,7 +16,7 @@ final class Filter {
 		if (is_string($segments)) {
 			$segments = explode("/", trim($segments, "/"));
 		}
-		list($attribs, $sefCodes, $groups, $catalogSections) = \Rodzeta\Referenceattribs\Utils::get();
+		list($attribs, $sefCodes, $groups, $catalogSections) = \Rodzeta\Referenceattribs\Config();
 
 		$filterParams = array();
 		// detect current section url

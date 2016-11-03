@@ -49,7 +49,7 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 		//Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
 		//Option::set("rodzeta.referenceattribs", "use_options_links", $request->getPost("use_options_links"));
 
-		\Rodzeta\Referenceattribs\Utils::createCache();
+		CreateCache($request->getPost("attribs"));
 
 		\CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"),
@@ -150,13 +150,13 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 								<br>
 							</td>
 							<td nowrap>
-								<?php foreach (range(1, 10) as $i) { ?>
+								<?php foreach (AppendValues($row["VALUES"], 10, array("", "")) as $n => $v) { ?>
 									<input type="text" placeholder="Название"
-										name="attribs[<?= $i ?>][NAME]"
-										value="<?= htmlspecialcharsex($row["NAME"]) ?>"
+										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][NAME]"
+										value="<?= htmlspecialcharsex($v["NAME"]) ?>"
 										size="25">
 									<input type="text" placeholder="Алиас (для ЧПУ)"
-										name="attribs[<?= $i ?>][ALIAS]"
+										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ALIAS]"
 										value="<?= htmlspecialcharsex($row["ALIAS"]) ?>"
 										size="25">
 									<br>

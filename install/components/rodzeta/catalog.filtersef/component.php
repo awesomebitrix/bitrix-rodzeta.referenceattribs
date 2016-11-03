@@ -15,7 +15,7 @@ use Bitrix\Main\Config\Option;
 
 $arResult["ITEMS"] = array();
 
-list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Utils::get();
+list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Config();
 
 //$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
