@@ -5,6 +5,8 @@
  * MIT License
  ************************************************************************************************/
 
+namespace Rodzeta\Referenceattribs;
+
 defined('B_PROLOG_INCLUDED') and (B_PROLOG_INCLUDED === true) or die();
 
 use Bitrix\Main\Application;
@@ -20,9 +22,18 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $request = $context->getRequest();
 
+$currentIblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
+
 Loc::loadMessages(__FILE__);
 
-$tabControl = new CAdminTabControl("tabControl", array(
+$tabControl = new \CAdminTabControl("tabControl", array(
+	array(
+		"DIV" => "edit2",
+		"TAB" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_DATA_TAB_SET"),
+		"TITLE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_DATA_TAB_TITLE_SET", array(
+			"#FILE#" => _FILE_ATTRIBS
+		)),
+  ),
   array(
 		"DIV" => "edit1",
 		"TAB" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_MAIN_TAB_SET"),
@@ -30,23 +41,7 @@ $tabControl = new CAdminTabControl("tabControl", array(
   ),
 ));
 
-?>
-
-<?php /*
-<?= BeginNote() ?>
-<p>
-	<b>Как работает</b>
-	<ul>
-		<li>структура раздела "Справочники": раздел - тип значения (например Цвет), его подразделы - значения (например Красный, Желтый, Зеленый);
-		<li>после изменений в разделе "Справочники" - нажмите в настройке модуля кнопку "Применить настройки";
-	</ul>
-</p>
-<?= EndNote() ?>
-*/ ?>
-
-<?php
-
-if ($request->isPost() && check_bitrix_sessid()) {
+if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
 		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
@@ -56,7 +51,7 @@ if ($request->isPost() && check_bitrix_sessid()) {
 
 		\Rodzeta\Referenceattribs\Utils::createCache();
 
-		CAdminMessage::showMessage(array(
+		\CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"),
 	    "TYPE" => "OK",
 	  ));
@@ -93,7 +88,98 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 </script>
 
 <form method="post" action="<?= sprintf('%s?mid=%s&lang=%s', $request->getRequestedPage(), urlencode($mid), LANGUAGE_ID) ?>" type="get">
-	<?= bitrix_sessid_post() ?>
+	<?= \bitrix_sessid_post() ?>
+
+	<?php $tabControl->beginNextTab() ?>
+
+	<tr>
+		<td colspan="2">
+			<table width="100%" class="rodzeta-referenceattribs">
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th>
+							Выводить в разделах
+							<div class="rodzeta-referenceattribs-sections-src" style="display:none;">
+								<select multiple size="13" style="width:90%;">
+									<?php foreach (SectionsTreeList($currentIblockId) as $optionValue => $optionName) { ?>
+										<option value="<?= $optionValue ?>"><?= $optionName ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 10, array_fill(0, 12, null)) as $i => $row) { ?>
+						<tr>
+							<td>
+								<input type="text" placeholder="Код атрибута"
+									name="attribs[<?= $i ?>][CODE]"
+									value="<?= htmlspecialcharsex($row["CODE"]) ?>"
+									size="16">
+								<br>
+								<input type="text" placeholder="Сортировка"
+									name="attribs[<?= $i ?>][SORT]"
+									value="<?= htmlspecialcharsex($row["SORT"]) ?>"
+									size="16">
+								<br>
+								<br>
+								<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля">
+									<option value="">CHECKBOX</option>
+									<option value="RADIO" <?= $row["INPUT_TYPE"] == "RADIO"? "selected" : "" ?>>RADIO</option>
+									<option value="SELECT" <?= $row["INPUT_TYPE"] == "SELECT"? "selected" : "" ?>>SELECT</option>
+									<option value="MULTISELECT" <?= $row["INPUT_TYPE"] == "MULTISELECT"? "selected" : "" ?>>MULTISELECT</option>
+								</select>
+								<br>
+								<br>
+								<input type="hidden" name="attribs[<?= $i ?>][FILTER]" value="">
+								<input type="hidden" name="attribs[<?= $i ?>][COMPARE]" value="">
+								<label title="Использовать в фильтре">
+									<input type="checkbox"
+										name="attribs[<?= $i ?>][FILTER]"
+										value="1" <?= !empty($row["FILTER"])? "checked" : "" ?>>&nbsp;Фильтр
+								</label>
+								<br>
+								<label title="Использовать в сравнении">
+									<input type="checkbox"
+										name="attribs[<?= $i ?>][COMPARE]"
+										value="1" <?= !empty($row["COMPARE"])? "checked" : "" ?>>&nbsp;Сравнение
+								</label>
+								<br>
+							</td>
+							<td nowrap>
+								<?php foreach (range(1, 10) as $i) { ?>
+									<input type="text" placeholder="Название"
+										name="attribs[<?= $i ?>][NAME]"
+										value="<?= htmlspecialcharsex($row["NAME"]) ?>"
+										size="25">
+									<input type="text" placeholder="Алиас (для ЧПУ)"
+										name="attribs[<?= $i ?>][ALIAS]"
+										value="<?= htmlspecialcharsex($row["ALIAS"]) ?>"
+										size="25">
+									<br>
+								<?php } ?>
+							</td>
+							<td>
+								<div class="rodzeta-referenceattribs-sections">
+									<input type="text" style="display:none;"
+										name="attribs[<?= $i ?>][SECTIONS]" value="<?= htmlspecialcharsex(implode(",", array_keys($row["SECTIONS"]))) ?>">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<br>
+								<br>
+							</td>
+						<tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</td>
+	</tr>
 
 	<?php $tabControl->beginNextTab() ?>
 
@@ -107,7 +193,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(
-				Option::get("rodzeta.referenceattribs", "iblock_id", 2),
+				$currentIblockId,
 				"iblock_type_id",
 				"iblock_id",
 				array(
@@ -181,10 +267,65 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 </form>
 
+<style>
+
+table.rodzeta-referenceattribs input,
+table.rodzeta-referenceattribs select,
+table.rodzeta-referenceattribs label {
+	margin-bottom: 4px !important;
+}
+
+table.rodzeta-referenceattribs td {
+	vertical-align: top;
+}
+
+</style>
+
 <script>
 
 RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
 RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-catalogsection-id"));
+
+BX.ready(function () {
+	"use strict";
+
+	//RodzetaSettingsAttribsUpdate();
+
+	var $selectSections = document.querySelectorAll(".rodzeta-referenceattribs-sections");
+	var selectSectionsSrc = document.querySelector(".rodzeta-referenceattribs-sections-src").innerHTML;
+	for (var i = 0, l = $selectSections.length; i < l; i++) {
+		var $sections = $selectSections[i].querySelector("input");
+
+		// append sections selector
+		$selectSections[i].innerHTML = $selectSections[i].innerHTML + selectSectionsSrc;
+		var $selectSectionsInput = $selectSections[i].querySelector("select");
+
+		$selectSectionsInput.onchange = function (event) {
+			// update selected options
+			var sectionsIds = [];
+			for (var i in event.target.options) {
+				if (event.target.options[i].selected) {
+					sectionsIds.push(event.target.options[i].value);
+				}
+			}
+			event.target.parentNode.querySelector("input").value = sectionsIds.join(",");
+		}
+
+		// init selected options
+		var sectionsIds = $sections.value.split(",");
+		if (sectionsIds.length > 0) {
+			for (var idx in sectionsIds) {
+				if (sectionsIds[idx] != "") {
+					var $option = $selectSectionsInput.querySelector('[value="' + sectionsIds[idx] + '"]');
+					if ($option) {
+						$option.selected = true;
+					}
+				}
+			}
+		}
+	}
+
+});
 
 </script>
 

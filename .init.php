@@ -47,12 +47,13 @@ function CreateCache($attribs) {
 	});
 
 	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));
-}
+}*/
 
 function Config() {
 	return include $_SERVER["DOCUMENT_ROOT"] . _FILE_ATTRIBS;
 }
 
+/*
 function Init(&$item) {
 	if (empty($item["PROPERTIES"]["RODZETA_ATTRIBS"])) {
 		return;
@@ -108,6 +109,7 @@ function PrintTree($elements, &$result, $level = 0) {
 		PrintTree($element["CHILDREN"], $result, $level + 1);
 	}
 }
+*/
 
 function AppendValues($data, $n, $v) {
 	for ($i = 0; $i < $n; $i++) {
@@ -127,4 +129,3 @@ function SectionsTreeList($currentIblockId) {
 	}
 	return $sections;
 }
-*/
