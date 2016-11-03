@@ -126,7 +126,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 									size="16">
 								<br>
 								<br>
-								<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля">
+								<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля для фильтра">
 									<option value="">CHECKBOX</option>
 									<option value="RADIO" <?= $row["INPUT_TYPE"] == "RADIO"? "selected" : "" ?>>RADIO</option>
 									<option value="SELECT" <?= $row["INPUT_TYPE"] == "SELECT"? "selected" : "" ?>>SELECT</option>
