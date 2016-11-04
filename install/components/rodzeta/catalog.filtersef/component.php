@@ -32,7 +32,7 @@ foreach ($directoryGroups as $group => $values) {
 	);
 	foreach ($values as $id => $v) {
     $arResult["ITEMS"][$groupName]["VALUE"][$id] = &$directoryValues[$id];
-    $arResult["ITEMS"][$groupName]["LINK"][$id] = \Rodzeta\Referenceattribs\Utils::getUrl($currentUrlSegments, $directoryValues[$id]["CODE"]);
+    $arResult["ITEMS"][$groupName]["LINK"][$id] = \Rodzeta\Referenceattribs\Url($currentUrlSegments, $directoryValues[$id]["CODE"]);
 	}
 }
 

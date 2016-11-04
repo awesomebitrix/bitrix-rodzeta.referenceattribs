@@ -209,6 +209,31 @@ function Config() {
 	return include $_SERVER["DOCUMENT_ROOT"] . _FILE_ATTRIBS;
 }
 
+function Url($segments, $param) {
+	$tmp = array_flip($segments);
+	if (!isset($segments[$param])) {
+		$tmp[] = $param;
+	}
+	return "/" . implode("/", $tmp) . "/";
+}
+
+function Init(&$item) {
+	static $config = null;
+	if (empty($config)) {
+		$config = Config();
+	}
+	$res = \CIBlockElement::GetElementGroups($item["ID"], true, array("ID"));
+	while ($section = $res->Fetch()) {
+		// TODO get data by section id from config
+		if (isset($config[0][$section["ID"]])) {
+			$groupId = $config[0][$section["ID"]]["GROUP_ID"];
+			$groupName = $config[0][$groupId]["NAME"];
+			$item["REFERENCEATTRIBS"][$groupName]["GROUP"] = &$config[0][$groupId];
+			$item["REFERENCEATTRIBS"][$groupName]["VALUE"][$section["ID"]] = &$config[0][$section["ID"]];
+		}
+  }
+}
+
 /*
 function Init(&$item) {
 	if (empty($item["PROPERTIES"]["RODZETA_ATTRIBS"])) {

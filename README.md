@@ -68,7 +68,7 @@ c явным заданием значений для фильтрации
 
 ### Пример для инициализации значений атрибутов в result_modifier.php компонента "Элемент каталога"
 
-    \Rodzeta\Referenceattribs\Utils::init($arResult);
+    \Rodzeta\Referenceattribs\Init($arResult);
 
 ### Пример вывода значений атрибутов в шаблоне компонента "Элемент каталога"
 
