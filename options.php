@@ -49,7 +49,15 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 		//Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
 		//Option::set("rodzeta.referenceattribs", "use_options_links", $request->getPost("use_options_links"));
 
-		CreateCache($request->getPost("attribs"));
+		$errors = CreateCache($request->getPost("attribs"));
+		if (!empty($errors["BY_ALIAS"])) {
+			\CAdminMessage::showMessage(array(
+		    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", array(
+					"#VALUE#" => implode(", ", $errors["BY_ALIAS"])
+				)),
+		    "TYPE" => "ERROR",
+		  ));
+		}
 
 		\CAdminMessage::showMessage(array(
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"),
@@ -98,17 +106,17 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 				<thead>
 					<tr>
 						<th></th>
-						<th></th>
 						<th>
 							Выводить в разделах
 							<div class="rodzeta-referenceattribs-sections-src" style="display:none;">
-								<select multiple size="13" style="width:90%;">
+								<select multiple size="14" style="width:90%;">
 									<?php foreach (SectionsTreeList($currentIblockId) as $optionValue => $optionName) { ?>
 										<option value="<?= $optionValue ?>"><?= $optionName ?></option>
 									<?php } ?>
 								</select>
 							</div>
 						</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -118,6 +126,11 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 								<input type="text" placeholder="Код атрибута"
 									name="attribs[<?= $i ?>][CODE]"
 									value="<?= htmlspecialcharsex($row["CODE"]) ?>"
+									size="16">
+								<br>
+								<input type="text" placeholder="Название"
+									name="attribs[<?= $i ?>][NAME]"
+									value="<?= htmlspecialcharsex($row["NAME"]) ?>"
 									size="16">
 								<br>
 								<input type="text" placeholder="Сортировка"
@@ -149,9 +162,15 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 								</label>
 								<br>
 							</td>
+							<td>
+								<div class="rodzeta-referenceattribs-sections">
+									<input type="text" style="display:none;"
+										name="attribs[<?= $i ?>][SECTIONS]" value="<?= htmlspecialcharsex(implode(",", array_keys($row["SECTIONS"]))) ?>">
+								</div>
+							</td>
 							<td nowrap>
 								<?php foreach (AppendValues($row["VALUES"], 10, array("", "")) as $n => $v) { ?>
-									<input type="text" placeholder="Название"
+									<input type="text" placeholder="Значение"
 										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][NAME]"
 										value="<?= htmlspecialcharsex($v["NAME"]) ?>"
 										size="25">
@@ -161,12 +180,6 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 										size="25">
 									<br>
 								<?php } ?>
-							</td>
-							<td>
-								<div class="rodzeta-referenceattribs-sections">
-									<input type="text" style="display:none;"
-										name="attribs[<?= $i ?>][SECTIONS]" value="<?= htmlspecialcharsex(implode(",", array_keys($row["SECTIONS"]))) ?>">
-								</div>
 							</td>
 						</tr>
 						<tr>
