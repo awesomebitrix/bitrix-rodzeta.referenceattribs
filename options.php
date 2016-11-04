@@ -123,7 +123,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 10, array_fill(0, 12, null)) as $i => $row) { ?>
 						<tr>
 							<td>
-								<input type="text" name="attribs[<?= $i ?>][SECTION_ID]" value="<?= htmlspecialcharsex($row["SECTION_ID"]) ?>">
+								<input type="hidden" name="attribs[<?= $i ?>][SECTION_ID]" value="<?= htmlspecialcharsex($row["SECTION_ID"]) ?>">
 								<input type="text" placeholder="Код атрибута"
 									name="attribs[<?= $i ?>][CODE]"
 									value="<?= htmlspecialcharsex($row["CODE"]) ?>"

@@ -166,7 +166,7 @@ function CreateCache($attribs) {
 				array("SORT" => "ASC"),
 				array(
 					"IBLOCK_ID" => $iblockId,
-					"IBLOCK_SECTION_ID" => $mainSectionId,
+					"SECTION_ID" => $mainSectionId,
 					"CODE" => $row["CODE"],
 					"ACTIVE" => "Y",
 				),
