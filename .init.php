@@ -119,22 +119,25 @@ function CreateCache() {
 */
 
 function CreateCache($attribs) {
-	echo "<pre>"; print_r($attribs); echo "</pre>";
-	return;
-
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
 	$sefCodes = array();
 	$result = array();
 	foreach ($attribs as $row) {
 		$row["CODE"] = trim($row["CODE"]);
-		$row["ALIAS"] = trim($row["ALIAS"]);
 		if ($row["CODE"] == "" || count(array_filter($row)) == 0) {
 			continue;
 		}
 		$row["SORT"] = (int)$row["SORT"];
 		// collect sef codes
-		if (!empty($row["ALIAS"])) {
-			$sefCodes[$row["ALIAS"]] = $row["CODE"];
+		foreach ($row["VALUES"] as $i => $v) {
+			$v["NAME"] = trim($v["NAME"]);
+			$v["ALIAS"] = trim($v["ALIAS"]);
+			if ($v["NAME"] == "" || $v["ALIAS"] == "") {
+				unset($row["VALUES"][$i]);
+			} else {
+				$row["VALUES"][$i] = $v;
+				$sefCodes[$v["ALIAS"]] = $v["NAME"];
+			}
 		}
 		// convert sections ids
 		if (!empty($row["SECTIONS"])) {
@@ -151,7 +154,7 @@ function CreateCache($attribs) {
 		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
 	});
 
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));
+	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes, array_flip($sefCodes)));
 }
 
 function Config() {

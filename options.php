@@ -157,7 +157,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 										size="25">
 									<input type="text" placeholder="Алиас (для ЧПУ)"
 										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ALIAS]"
-										value="<?= htmlspecialcharsex($row["ALIAS"]) ?>"
+										value="<?= htmlspecialcharsex($v["ALIAS"]) ?>"
 										size="25">
 									<br>
 								<?php } ?>
