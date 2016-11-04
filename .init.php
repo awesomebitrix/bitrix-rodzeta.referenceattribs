@@ -122,6 +122,13 @@ function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
 	$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
 
+	$sort = function ($a, $b) {
+		if ($a["SORT"] == $b["SORT"]) {
+			return 0;
+		}
+		return ((int)$a["SORT"] < (int)$b["SORT"]) ? -1 : 1;
+	};
+
 	// create section RODZETA_REFERENCES
 	$res = \CIBlockSection::GetList(
 		array("SORT" => "ASC"),
@@ -232,6 +239,9 @@ function CreateCache($attribs) {
 							$sectionValue = $res->GetNext();
 						}
 						$iblockSection = new \CIBlockSection();
+						if (empty($v["SORT"])) {
+							$v["SORT"] = ($i + 1) * 100;
+						}
 						if (empty($sectionValue["ID"])) {
 							$v["ID"] = $iblockSection->Add(array(
 							  "IBLOCK_ID" => $iblockId,
@@ -264,16 +274,14 @@ function CreateCache($attribs) {
 		if (!empty($row["SECTIONS"])) {
 			$row["SECTIONS"] = array_flip(explode(",", $row["SECTIONS"]));
 		}
+		// ordering attribs by key SORT
+		usort($row["VALUES"], $sort);
+
 		$result[$row["CODE"]] = $row;
 	}
 
-	// ordering by key SORT
-	uasort($result, function ($a, $b) {
-		if ($a["SORT"] == $b["SORT"]) {
-			return 0;
-		}
-		return ($a["SORT"] < $b["SORT"]) ? -1 : 1;
-	});
+	// ordering attribs by key SORT
+	uasort($result, $sort);
 
 	// TODO map alias => section id (for filter)
 

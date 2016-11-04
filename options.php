@@ -171,7 +171,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 							</td>
 							<td nowrap>
 								<?php foreach (AppendValues($row["VALUES"], 10, array("", "")) as $n => $v) { ?>
-									<input type="text" name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ID]" value="<?= htmlspecialcharsex($v["ID"]) ?>">
+									<input type="hidden" name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ID]" value="<?= htmlspecialcharsex($v["ID"]) ?>">
 									<input type="text" placeholder="Значение"
 										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][NAME]"
 										value="<?= htmlspecialcharsex($v["NAME"]) ?>"
