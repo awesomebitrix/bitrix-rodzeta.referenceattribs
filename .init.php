@@ -161,8 +161,39 @@ function CreateCache($attribs) {
 		$row["SORT"] = (int)$row["SORT"];
 
 		if ($mainSectionId) {
-			// TODO create or update section for attrib
-			// ...
+			// create or update section for attrib
+			$res = \CIBlockSection::GetList(
+				array("SORT" => "ASC"),
+				array(
+					"IBLOCK_ID" => $iblockId,
+					"IBLOCK_SECTION_ID" => $mainSectionId,
+					"CODE" => $row["CODE"],
+					"ACTIVE" => "Y",
+				),
+				true,
+				array("*")
+			);
+			$sectionGroup = $res->GetNext();
+			$iblockSection = new \CIBlockSection();
+			if (empty($sectionGroup["ID"])) {
+				$row["SECTION_ID"] = $iblockSection->Add(array(
+				  "IBLOCK_ID" => $iblockId,
+				  "IBLOCK_SECTION_ID" => $mainSectionId,
+				  "NAME" => $row["NAME"],
+				  "CODE" => $row["CODE"],
+				  "SORT" => $row["SORT"],
+					"ACTIVE" => "Y",
+			  ));
+			} else {
+				$row["SECTION_ID"] = $sectionGroup["ID"];
+				$iblockSection->Update($row["SECTION_ID"], array(
+				  "IBLOCK_ID" => $iblockId,
+				  "NAME" => $row["NAME"],
+				  "CODE" => $row["CODE"],
+				  "SORT" => $row["SORT"],
+					"ACTIVE" => "Y",
+			  ));
+			}
 		}
 
 		// collect sef codes
