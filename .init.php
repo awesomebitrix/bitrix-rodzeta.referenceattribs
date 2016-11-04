@@ -128,7 +128,6 @@ function CreateCache($attribs) {
 		array(
 			"IBLOCK_ID" => $iblockId,
 			"CODE" => "RODZETA_REFERENCES",
-			"ACTIVE" => "Y",
 		),
 		true,
 		array("*")
@@ -168,7 +167,6 @@ function CreateCache($attribs) {
 					"IBLOCK_ID" => $iblockId,
 					"SECTION_ID" => $mainSectionId,
 					"CODE" => $row["CODE"],
-					"ACTIVE" => "Y",
 				),
 				true,
 				array("*")
@@ -201,15 +199,63 @@ function CreateCache($attribs) {
 			$v["NAME"] = trim($v["NAME"]);
 			$v["ALIAS"] = trim($v["ALIAS"]);
 			if ($v["NAME"] != "" && $v["ALIAS"] != "") {
-				$row["VALUES"][$i] = $v;
 				if (!isset($sefCodes[$v["ALIAS"]])) {
 					$sefCodes[$v["ALIAS"]] = array($row["CODE"], $i);
 
-					// TODO create ir update section for value
-
+					if ($mainSectionId) {
+						$sectionValue = array();
+						// create or update section for value
+						$filterValue = array(
+							"IBLOCK_ID" => $iblockId,
+							"SECTION_ID" => $row["SECTION_ID"],
+						);
+						if (!empty($v["ID"])) {
+							$filterValue["ID"] = $v["ID"];
+							$res = \CIBlockSection::GetList(
+								array("SORT" => "ASC"),
+								$filterValue,
+								true,
+								array("*")
+							);
+							$sectionValue = $res->GetNext();
+						}
+						if (empty($sectionValue["ID"])) {
+							// find by CODE = ALIAS
+							unset($filterValue["ID"]);
+							$filterValue["CODE"] = $v["ALIAS"];
+							$res = \CIBlockSection::GetList(
+								array("SORT" => "ASC"),
+								$filterValue,
+								true,
+								array("*")
+							);
+							$sectionValue = $res->GetNext();
+						}
+						$iblockSection = new \CIBlockSection();
+						if (empty($sectionValue["ID"])) {
+							$v["ID"] = $iblockSection->Add(array(
+							  "IBLOCK_ID" => $iblockId,
+							  "IBLOCK_SECTION_ID" => $row["SECTION_ID"],
+							  "NAME" => $v["NAME"],
+							  "CODE" => $v["ALIAS"],
+							  "SORT" => $v["SORT"],
+								"ACTIVE" => "Y",
+						  ));
+						} else {
+							$v["ID"] = $sectionValue["ID"];
+							$iblockSection->Update($v["ID"], array(
+							  "IBLOCK_ID" => $iblockId,
+							  "NAME" => $v["NAME"],
+							  "CODE" => $v["ALIAS"],
+							  "SORT" => $v["SORT"],
+								"ACTIVE" => "Y",
+						  ));
+						}
+					}
 				} else {
 					$errors["BY_ALIAS"][] = $row["CODE"] . ": " . $v["ALIAS"];
 				}
+				$row["VALUES"][$i] = $v;
 			} else {
 				unset($row["VALUES"][$i]);
 			}
