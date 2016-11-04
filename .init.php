@@ -283,9 +283,7 @@ function CreateCache($attribs) {
 	// ordering attribs by key SORT
 	uasort($result, $sort);
 
-	// TODO map alias => section id (for filter)
-
-	// TODO all sections list
+	// TODO all real sections list
 
 	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));
 
