@@ -120,6 +120,36 @@ function CreateCache() {
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
+	$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
+
+	// create section RODZETA_REFERENCES
+	$res = \CIBlockSection::GetList(
+		array("SORT" => "ASC"),
+		array(
+			"IBLOCK_ID" => $iblockId,
+			"CODE" => "RODZETA_REFERENCES",
+			"ACTIVE" => "Y",
+		),
+		true,
+		array("*")
+	);
+	$sectionReferences = $res->GetNext();
+	if (empty($sectionReferences["ID"])) {
+		$iblockSection = new \CIBlockSection();
+		$mainSectionId = $iblockSection->Add(array(
+		  "IBLOCK_ID" => $iblockId,
+		  "NAME" => "Справочники",
+		  "CODE" => "RODZETA_REFERENCES",
+		  "SORT" => 10000,
+			"ACTIVE" => "Y",
+	  ));
+	  if (!empty($mainSectionId)) {
+	  	Option::set("rodzeta.referenceattribs", "section_id", $mainSectionId);
+	  }
+	} else {
+		$mainSectionId = $sectionReferences["ID"];
+	}
+
 	$sefCodes = array();
 	$result = array();
 	$errors = array();
@@ -130,6 +160,11 @@ function CreateCache($attribs) {
 		}
 		$row["SORT"] = (int)$row["SORT"];
 
+		if ($mainSectionId) {
+			// TODO create or update section for attrib
+			// ...
+		}
+
 		// collect sef codes
 		foreach ($row["VALUES"] as $i => $v) {
 			$v["NAME"] = trim($v["NAME"]);
@@ -138,6 +173,9 @@ function CreateCache($attribs) {
 				$row["VALUES"][$i] = $v;
 				if (!isset($sefCodes[$v["ALIAS"]])) {
 					$sefCodes[$v["ALIAS"]] = array($row["CODE"], $i);
+
+					// TODO create ir update section for value
+
 				} else {
 					$errors["BY_ALIAS"][] = $row["CODE"] . ": " . $v["ALIAS"];
 				}
@@ -161,6 +199,7 @@ function CreateCache($attribs) {
 	});
 
 	// TODO map alias => section id (for filter)
+
 	// TODO all sections list
 
 	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes));

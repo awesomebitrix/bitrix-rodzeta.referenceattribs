@@ -44,7 +44,7 @@ $tabControl = new \CAdminTabControl("tabControl", array(
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
-		Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
+		//Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
 		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
 		//Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
 		//Option::set("rodzeta.referenceattribs", "use_options_links", $request->getPost("use_options_links"));
@@ -123,6 +123,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 					<?php list($attribs) = Config(); foreach (AppendValues($attribs, 10, array_fill(0, 12, null)) as $i => $row) { ?>
 						<tr>
 							<td>
+								<input type="text" name="attribs[<?= $i ?>][SECTION_ID]" value="<?= htmlspecialcharsex($row["SECTION_ID"]) ?>">
 								<input type="text" placeholder="Код атрибута"
 									name="attribs[<?= $i ?>][CODE]"
 									value="<?= htmlspecialcharsex($row["CODE"]) ?>"
@@ -213,11 +214,12 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 					"MIN_PERMISSION" => "R",
 				),
 				"",
-				"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-section-id'));RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
+				"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
 			) ?>
 		</td>
 	</tr>
 
+	<?php /*
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
 			<label>Раздел "Справочники"</label>
@@ -229,6 +231,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 			</select>
 		</td>
 	</tr>
+	*/ ?>
 
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
@@ -296,7 +299,7 @@ table.rodzeta-referenceattribs td {
 
 <script>
 
-RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
+//RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
 RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-catalogsection-id"));
 
 BX.ready(function () {
