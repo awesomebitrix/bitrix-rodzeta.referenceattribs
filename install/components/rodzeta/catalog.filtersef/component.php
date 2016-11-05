@@ -39,7 +39,10 @@ $arResult["ITEMS"] = $attribs;
 if (defined("ERROR_404")) { // section with filter
   // init params for filter
   list($filter, $currentUrl, $currentSectionId, $selectedIds) =
-    Filter::get($arResult["CURRENT_SECTION_URL"]);
+    Filter($arResult["CURRENT_SECTION_URL"]);
+
+  var_dump($filter, $currentUrl, $currentSectionId, $selectedIds);
+
   if ($filter !== false) {
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
@@ -69,8 +72,8 @@ if (defined("ERROR_404")) { // section with filter
   }
 
 } else { // section url
-  if (isset($sectionsPaths[$arResult["CURRENT_SECTION_URL"]])) {
-    $arResult["CURRENT_SECTION_ID"] = $sectionsPaths[$arResult["CURRENT_SECTION_URL"]];
+  if (isset($catalogSections[$arResult["CURRENT_SECTION_URL"]])) {
+    $arResult["CURRENT_SECTION_ID"] = $catalogSections[$arResult["CURRENT_SECTION_URL"]];
   }
 }
 

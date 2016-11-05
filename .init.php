@@ -14,6 +14,7 @@ define(__NAMESPACE__ . "\_LIB", __DIR__  . "/lib/");
 define(__NAMESPACE__ . "\_FILE_ATTRIBS", "/upload/.rodzeta.referenceattribs.php");
 
 require _LIB . "encoding/php-array.php";
+require _LIB . "filter.php";
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];

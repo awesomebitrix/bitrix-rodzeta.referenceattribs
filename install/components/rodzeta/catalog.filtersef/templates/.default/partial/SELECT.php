@@ -3,6 +3,7 @@
 	<div class="js-field-select">
 		<label><?= $attr["NAME"] ?></label>
     <select>
+      <option value=""></option>
   	  <?php foreach ($attr["VALUES"] as $i => $value) {
   	  	$selected = !empty($arResult["SELECTED_VALUES"][$value["ID"]])? "selected" : "";
       ?>

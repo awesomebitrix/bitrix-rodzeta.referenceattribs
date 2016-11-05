@@ -48,7 +48,7 @@
 c явным заданием значений для фильтрации
 
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
-    \Rodzeta\Referenceattribs\Filter::get(array(
+    \Rodzeta\Referenceattribs\Filter(array(
         "catalog", // первый элемент - всегда код раздела "Каталог"
         "red", // значения заданные вручную
         "green"
@@ -57,7 +57,7 @@ c явным заданием значений для фильтрации
 или для страниц раздела каталога /catalog/*
 
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
-    \Rodzeta\Referenceattribs\Filter::get($APPLICATION->GetCurPage(false));
+    \Rodzeta\Referenceattribs\Filter($APPLICATION->GetCurPage(false));
 
     <?$APPLICATION->IncludeComponent(
     "bitrix:catalog.section",
