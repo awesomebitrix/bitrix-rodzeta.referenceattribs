@@ -73,12 +73,11 @@ c явным заданием значений для фильтрации
 
 ### Пример вывода значений атрибутов в шаблоне компонента "Элемент каталога"
 
-    <?php foreach ($arResult["REFERENCEATTRIBS"] as $groupName => $v) { ?>
+    <?php foreach ($arResult["PROPERTIES"] as $code => $v) { ?>
         <div>
-            <span><?= $groupName ?>:
-            </span><?php foreach ($v["VALUE"] as $value) { ?>
-                <?= $value["NAME"] ?><?= $value["UF_UNIT"] ?>;
-            <?php } ?>
+            <span><?= $v["NAME"] ?>:</span>
+            <?= !is_array($v["VALUE"])?
+                        $v["VALUE"] : implode(", ", $v["VALUE"]) ?> <?= $v["HINT"] ?>
         </div>
     <?php } ?>
 

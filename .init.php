@@ -237,10 +237,13 @@ function Init(&$item) {
 					"CODE" => &$config[0][$code]["CODE"],
 					"NAME" => &$config[0][$code]["NAME"],
 					"VALUE" => array(&$config[0][$code]["VALUES"][$valueIdx]["NAME"]),
+					"~VALUE" => array(&$config[0][$code]["VALUES"][$valueIdx]),
 				);
 			} else {
 				$item["PROPERTIES"][$code]["VALUE"][] =
 					&$config[0][$code]["VALUES"][$valueIdx]["NAME"];
+				$item["PROPERTIES"][$code]["~VALUE"][] =
+					&$config[0][$code]["VALUES"][$valueIdx];
 			}
 		}
   }
