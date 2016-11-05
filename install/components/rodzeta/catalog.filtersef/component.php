@@ -75,15 +75,13 @@ if (defined("ERROR_404")) { // section with filter
 }
 
 // filter params for current section
-/* !!!
 if (!empty($arResult["CURRENT_SECTION_ID"])) {
-  foreach ($arResult["ITEMS"] as $groupName => $v) {
-    if (empty($v["GROUP"]["UF_SECTIONS"]) || !in_array($arResult["CURRENT_SECTION_ID"], $v["GROUP"]["UF_SECTIONS"])) {
-      unset($arResult["ITEMS"][$groupName]);
+  foreach ($arResult["ITEMS"] as $code => $row) {
+    if (!isset($row["SECTIONS"][$arResult["CURRENT_SECTION_ID"]])) {
+      unset($arResult["ITEMS"][$code]);
     }
   }
 }
-*/
 
 //$this->SetResultCacheKeys(array(
 //  "ID",
