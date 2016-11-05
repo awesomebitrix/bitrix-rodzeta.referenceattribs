@@ -30,8 +30,6 @@ function Filter($segments, $config = null) {
 	}
 	$currentSectionId = $catalogSections[$url];
 
-	var_dump($currentSectionId, $currentUrl);
-
 	// create bitrix filter params
 	$selectedIds = array();
 	$selectedGroups = array();
