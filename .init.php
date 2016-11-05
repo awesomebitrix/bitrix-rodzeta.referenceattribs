@@ -233,6 +233,10 @@ function Init(&$item) {
 	while ($section = $res->Fetch()) {
 		if (isset($config[3][$section["ID"]])) {
 			list($code, $valueIdx) = $config[3][$section["ID"]];
+			// filter by attrib sections
+			if (!isset($config[0][$code]["SECTIONS"][$item["IBLOCK_SECTION_ID"]])) {
+				continue;
+			}
 			if (!isset($item["PROPERTIES"][$code])) {
 				$item["PROPERTIES"][$code] = array(
 					"CODE" => &$config[0][$code]["CODE"],
