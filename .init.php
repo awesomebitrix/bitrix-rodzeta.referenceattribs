@@ -56,6 +56,7 @@ function CreateCache($attribs) {
 	$sefCodes = array();
 	$result = array();
 	$errors = array();
+	$values = array();
 	foreach ($attribs as $row) {
 		$row["CODE"] = trim($row["CODE"]);
 		if ($row["CODE"] == "" || count(array_filter($row)) == 0) {
@@ -158,6 +159,9 @@ function CreateCache($attribs) {
 								"ACTIVE" => "Y",
 						  ));
 						}
+
+						// collect value ids
+						$values[$v["ID"]] = array($row["CODE"], $i);
 					}
 				} else {
 					$errors["BY_ALIAS"][] = $row["CODE"] . ": " . $v["ALIAS"];
@@ -200,7 +204,9 @@ function CreateCache($attribs) {
 		}
 	}
 
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array($result, $sefCodes, $catalogSections));
+	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array(
+		$result, $sefCodes, $catalogSections, $values
+	));
 
 	return $errors;
 }
@@ -224,50 +230,23 @@ function Init(&$item) {
 	}
 	$res = \CIBlockElement::GetElementGroups($item["ID"], true, array("ID"));
 	while ($section = $res->Fetch()) {
-		// TODO get data by section id from config
-		if (isset($config[0][$section["ID"]])) {
-			$groupId = $config[0][$section["ID"]]["GROUP_ID"];
-			$groupName = $config[0][$groupId]["NAME"];
-			$item["REFERENCEATTRIBS"][$groupName]["GROUP"] = &$config[0][$groupId];
-			$item["REFERENCEATTRIBS"][$groupName]["VALUE"][$section["ID"]] = &$config[0][$section["ID"]];
+		if (isset($config[3][$section["ID"]])) {
+			list($code, $valueIdx) = $config[3][$section["ID"]];
+			if (!isset($item["PROPERTIES"][$code])) {
+				$item["PROPERTIES"][$code] = array(
+					"CODE" => &$config[0][$code]["CODE"],
+					"NAME" => &$config[0][$code]["NAME"],
+					"VALUE" => array(&$config[0][$code]["VALUES"][$valueIdx]["NAME"]),
+				);
+			} else {
+				$item["PROPERTIES"][$code]["VALUE"][] =
+					&$config[0][$code]["VALUES"][$valueIdx]["NAME"];
+			}
 		}
   }
 }
 
 /*
-function Init(&$item) {
-	if (empty($item["PROPERTIES"]["RODZETA_ATTRIBS"])) {
-		return;
-	}
-	if (!empty($item["DISPLAY_PROPERTIES"]["RODZETA_ATTRIBS"])) {
-		unset($item["DISPLAY_PROPERTIES"]["RODZETA_ATTRIBS"]);
-	}
-	$attribs = &$item["PROPERTIES"]["RODZETA_ATTRIBS"];
-	$tmp = array();
-	foreach ($attribs["~VALUE"] as $i => $v) {
-		if (!empty($attribs["DESCRIPTION"][$i])) {
-			$tmp[$attribs["DESCRIPTION"][$i]] = $v;
-		}
-	}
-	// sort
-	static $config = null;
-	if (empty($config)) {
-		list($config) = Config();
-	}
-	foreach ($config as $code => $v) {
-		if (isset($tmp[$code])) {
-			$item["PROPERTIES"][$code] = array(
-				"CODE" => &$config[$code]["CODE"],
-				"NAME" => &$config[$code]["NAME"],
-				"HINT" => &$config[$code]["HINT"],
-				"VALUE" => $tmp[$code],
-			);
-			$item["PROPERTIES"][$code]["~VALUE"] = &$item["PROPERTIES"][$code]["VALUE"];
-		}
-	}
-	unset($item["PROPERTIES"]["RODZETA_ATTRIBS"]);
-	//unset($item["PROPERTIES"]["LINKS"]);
-}
 
 function BuildTree(&$elements, $parentId = 0) {
 	$branch = array();
