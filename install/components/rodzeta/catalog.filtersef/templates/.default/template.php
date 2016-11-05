@@ -20,8 +20,9 @@ if (empty($arResult["ITEMS"])) {
 
 	  <div class="form-container">
 
-			<?php foreach ($arResult["ITEMS"] as $groupName => $v) {
-				$paramTemplate = !empty($v["GROUP"]["UF_INPUT_TYPE"])? basename($v["GROUP"]["UF_INPUT_TYPE"]) : "SELECT";
+			<?php foreach ($arResult["ITEMS"] as $code => $attr) {
+				$paramTemplate = !empty($attr["INPUT_TYPE"])?
+					basename($attr["INPUT_TYPE"]) : "CHECKBOX";
 			?>
 				<?php include __DIR__ . "/partial/" . $paramTemplate . ".php" ?>
 		  <?php } ?>

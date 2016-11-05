@@ -5,9 +5,11 @@
  * MIT License
  ************************************************************************************************/
 
+namespace Rodzeta\Referenceattribs;
+
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
-use Bitrix\Main\Config\Option;
+use \Bitrix\Main\Config\Option;
 
 //$path = $this->GetPath();
 
@@ -15,32 +17,29 @@ use Bitrix\Main\Config\Option;
 
 $arResult["ITEMS"] = array();
 
-// TODO rewrite for new config structure
+list($attribs, $sefCodes, $catalogSections, $values) = Config();
 
-list($directoryValues, $dirAliases, $directoryGroups, $sectionsPaths) = \Rodzeta\Referenceattribs\Config();
-
-//$arResult["USE_OPTIONS_LINKS"] = Option::get("rodzeta.referenceattribs", "use_options_links");
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
 $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = array();
 $GLOBALS["RODZETA_CATALOG_FILTER"] = array();
 
-$currentUrlSegments = array_flip(array_filter(explode("/", $arResult["CURRENT_SECTION_URL"])));
-foreach ($directoryGroups as $group => $values) {
-	$groupName = $directoryValues[$group]["NAME"];
-	$arResult["ITEMS"][$groupName] = array(
-		"GROUP" => &$directoryValues[$group],
-		"VALUE" => null,
-	);
-	foreach ($values as $id => $v) {
-    $arResult["ITEMS"][$groupName]["VALUE"][$id] = &$directoryValues[$id];
-    $arResult["ITEMS"][$groupName]["LINK"][$id] = \Rodzeta\Referenceattribs\Url($currentUrlSegments, $directoryValues[$id]["CODE"]);
-	}
+$currentUrlSegments = array_flip(array_filter(
+  explode("/", $arResult["CURRENT_SECTION_URL"])));
+
+// init link for each value
+foreach ($attribs as $code => $row) {
+  foreach ($row["VALUES"] as $i => $v) {
+    $attribs[$code]["VALUES"][$i]["LINK"] =
+      Url($currentUrlSegments, $v["ALIAS"]);
+  }
 }
+$arResult["ITEMS"] = $attribs;
 
 if (defined("ERROR_404")) { // section with filter
   // init params for filter
-  list($filter, $currentUrl, $currentSectionId, $selectedIds) = \Rodzeta\Referenceattribs\Filter::get($arResult["CURRENT_SECTION_URL"]);
+  list($filter, $currentUrl, $currentSectionId, $selectedIds) =
+    Filter::get($arResult["CURRENT_SECTION_URL"]);
   if ($filter !== false) {
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
@@ -48,7 +47,6 @@ if (defined("ERROR_404")) { // section with filter
     $GLOBALS["RODZETA_CATALOG_FILTER"] = $filter;
 
     //CHTTP::SetStatus("200 OK");
-
     /*
     if (count($productIds) > 0) {
       $arResult["URL_TEMPLATES"]["section"] = "catalog/";
@@ -56,9 +54,6 @@ if (defined("ERROR_404")) { // section with filter
       //var_dump($arResult["FOLDER"], $arResult["URL_TEMPLATES"]);
 
       // FIX set status ok
-
-
-
       $hideSectionList = true;
 
       // prepare filter by product ids
@@ -69,7 +64,6 @@ if (defined("ERROR_404")) { // section with filter
       $appCatalogFilter = ["ID" => $productIds];
 
       //include $_SERVER["DOCUMENT_ROOT"] . "/" . $this->GetFolder() . "/section_horizontal.php";
-
     }
     */
   }
@@ -81,6 +75,7 @@ if (defined("ERROR_404")) { // section with filter
 }
 
 // filter params for current section
+/* !!!
 if (!empty($arResult["CURRENT_SECTION_ID"])) {
   foreach ($arResult["ITEMS"] as $groupName => $v) {
     if (empty($v["GROUP"]["UF_SECTIONS"]) || !in_array($arResult["CURRENT_SECTION_ID"], $v["GROUP"]["UF_SECTIONS"])) {
@@ -88,6 +83,7 @@ if (!empty($arResult["CURRENT_SECTION_ID"])) {
     }
   }
 }
+*/
 
 //$this->SetResultCacheKeys(array(
 //  "ID",

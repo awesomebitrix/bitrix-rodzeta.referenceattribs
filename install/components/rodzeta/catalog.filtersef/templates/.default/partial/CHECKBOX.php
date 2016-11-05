@@ -1,16 +1,16 @@
 
-<div class="form-field js-filter-param js-filter-param-<?= $v["GROUP"]["ID"] ?>">
+<div class="form-field js-filter-param js-filter-param-<?= $attr["CODE"] ?>">
 	<div class="js-field-checkbox">
-		<label><?= $groupName ?></label>
-	  <?php foreach ($v["VALUE"] as $id => $value) {
-	  	$checked = !empty($arResult["SELECTED_VALUES"][$id])? "checked" : "";
+		<label><?= $attr["NAME"] ?></label>
+	  <?php foreach ($attr["VALUES"] as $i => $value) {
+	  	$checked = !empty($arResult["SELECTED_VALUES"][$value["ID"]])? "checked" : "";
     ?>
     	<label>
     		<input type="checkbox" class="js-filter-by-url" <?= $checked ?>
-          data-field-id="<?= $id ?>"
-          data-slug="<?= $value["CODE"] ?>"
-          value="<?= $id ?>">
-     		<span class="js-filter-link"><a href="<?= $v["LINK"][$id] ?>"><?= $value["NAME"] ?></a></span>
+          data-field-id="<?= $attr["SECTION_ID"] ?>"
+          data-slug="<?= $value["ALIAS"] ?>"
+          value="<?= $value["ID"] ?>">
+     		<span class="js-filter-link"><a href="<?= $value["LINK"] ?>"><?= $value["NAME"] ?></a></span>
       </label>
   	<?php } ?>
 	</div>
