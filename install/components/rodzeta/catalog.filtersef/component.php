@@ -40,9 +40,6 @@ if (defined("ERROR_404")) { // section with filter
   // init params for filter
   list($filter, $currentUrl, $currentSectionId, $selectedIds) =
     Filter($arResult["CURRENT_SECTION_URL"]);
-
-  var_dump($filter, $currentUrl, $currentSectionId, $selectedIds);
-
   if ($filter !== false) {
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
