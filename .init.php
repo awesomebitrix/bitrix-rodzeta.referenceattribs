@@ -186,7 +186,7 @@ function CreateCache($attribs) {
 	uasort($result, $sort);
 
 	// get all urls for catalog sections
-	$res = \CIBlockSection::GetByID(Option::get("rodzeta.referenceattribs", "catalog_section_id", 7));
+	$res = \CIBlockSection::GetByID(Option::get("rodzeta.site", "section_content", 1));
 	$sectionCatalog = $res->GetNext();
 	$res = \CIBlockSection::GetList(
 		array("SORT" => "ASC"),

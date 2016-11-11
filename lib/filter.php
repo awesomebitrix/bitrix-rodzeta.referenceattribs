@@ -62,7 +62,7 @@ function Filter($segments, $config = null) {
 			"INCLUDE_SUBSECTIONS" => "Y",
 		);
 	}
-	if ($currentSectionId != Option::get("rodzeta.referenceattribs", "catalog_section_id", 2)) {
+	if ($currentSectionId != Option::get("rodzeta.site", "section_content", 1)) {
 		$result["ID"] = \CIBlockElement::SubQuery("ID", array(
       "IBLOCK_ID" => $iblockId,
       "SECTION_ID" => $currentSectionId,

@@ -44,10 +44,7 @@ $tabControl = new \CAdminTabControl("tabControl", array(
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
 		Option::set("rodzeta.site", "iblock_content", (int)$request->getPost("iblock_content"));
-		//Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
-		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
-		//Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
-		//Option::set("rodzeta.referenceattribs", "use_options_links", $request->getPost("use_options_links"));
+		Option::set("rodzeta.site", "section_content", (int)$request->getPost("section_content"));
 
 		$errors = CreateCache($request->getPost("attribs"));
 		if (!empty($errors["BY_ALIAS"])) {
@@ -63,14 +60,7 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"),
 	    "TYPE" => "OK",
 	  ));
-	}	/*else if ($request->getPost("clear") != "") {
-
-
-		CAdminMessage::showMessage(array(
-	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_RESETED"),
-	    "TYPE" => "OK",
-	  ));
-	} */
+	}
 }
 
 $tabControl->begin();
@@ -243,8 +233,8 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 			<label>Раздел "Каталог"</label>
 		</td>
 		<td class="adm-detail-content-cell-r" width="50%">
-			<select name="catalog_section_id" id="rodzeta-referenceattribs-catalogsection-id"
-					data-value="<?= Option::get("rodzeta.referenceattribs", "catalog_section_id", 7) ?>">
+			<select name="section_content" id="rodzeta-referenceattribs-catalogsection-id"
+					data-value="<?= Option::get("rodzeta.site", "section_content", 1) ?>">
 				<option value="">(выберите раздел)</option>
 			</select>
 		</td>
