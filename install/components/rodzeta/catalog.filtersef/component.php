@@ -22,6 +22,8 @@ list($attribs, $sefCodes, $catalogSections, $values) = Config();
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
 $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = array();
+
+// RODZETA_CATALOG_FILTER need for other components parametr $arParams["FILTER_NAME"]
 $GLOBALS["RODZETA_CATALOG_FILTER"] = array();
 
 $currentUrlSegments = array_flip(array_filter(
