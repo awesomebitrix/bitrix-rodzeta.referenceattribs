@@ -22,7 +22,7 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $request = $context->getRequest();
 
-$currentIblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
+$currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 Loc::loadMessages(__FILE__);
 
@@ -43,7 +43,7 @@ $tabControl = new \CAdminTabControl("tabControl", array(
 
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
-		Option::set("rodzeta.referenceattribs", "iblock_id", (int)$request->getPost("iblock_id"));
+		Option::set("rodzeta.site", "iblock_content", (int)$request->getPost("iblock_content"));
 		//Option::set("rodzeta.referenceattribs", "section_id", (int)$request->getPost("section_id"));
 		Option::set("rodzeta.referenceattribs", "catalog_section_id", (int)$request->getPost("catalog_section_id"));
 		//Option::set("rodzeta.referenceattribs", "filter_onchange", $request->getPost("filter_onchange"));
@@ -80,7 +80,7 @@ $tabControl->begin();
 <script>
 
 function RodzetaReferenceattribsUpdate($selectDest) {
-	var $selectIblock = document.getElementById("iblock_id");
+	var $selectIblock = document.getElementById("iblock_content");
 	var iblockId = $selectIblock.value;
 	var selectedOption = $selectDest.getAttribute("data-value");
 	BX.ajax.loadJSON("/bitrix/admin/rodzeta.referenceattribs/sectionoptions.php?iblock_id=" + iblockId, function (data) {
@@ -213,8 +213,8 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 		<td class="adm-detail-content-cell-r" width="50%">
 			<?= GetIBlockDropDownListEx(
 				$currentIblockId,
-				"iblock_type_id",
-				"iblock_id",
+				"iblock_type",
+				"iblock_content",
 				array(
 					"MIN_PERMISSION" => "R",
 				),

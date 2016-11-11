@@ -18,7 +18,7 @@ require _LIB . "filter.php";
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
-	$iblockId = Option::get("rodzeta.referenceattribs", "iblock_id", 2);
+	$iblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 	$sort = function ($a, $b) {
 		if ($a["SORT"] == $b["SORT"]) {
