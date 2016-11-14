@@ -47,11 +47,11 @@
 c явным заданием значений для фильтрации
 
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
-    \Rodzeta\Referenceattribs\Filter(array(
+    \Rodzeta\Referenceattribs\Filter([
         "catalog", // первый элемент - всегда код раздела "Каталог"
         "red", // значения заданные вручную
         "green"
-    ));
+    ]);
 
 или для страниц раздела каталога /catalog/*
 
