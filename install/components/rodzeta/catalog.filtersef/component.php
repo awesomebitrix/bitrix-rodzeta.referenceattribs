@@ -69,7 +69,6 @@ if (defined("ERROR_404")) { // section with filter
     }
     */
   }
-
 } else { // section url
   if (isset($catalogSections[$arResult["CURRENT_SECTION_URL"]])) {
     $arResult["CURRENT_SECTION_ID"] = $catalogSections[$arResult["CURRENT_SECTION_URL"]];
