@@ -1,8 +1,8 @@
 <?php
 return array (
-  0 => 
+  0 =>
   array (
-    'MATERIAL' => 
+    'MATERIAL' =>
     array (
       'SECTION_ID' => '234',
       'CODE' => 'MATERIAL',
@@ -11,62 +11,62 @@ return array (
       'INPUT_TYPE' => '',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '237',
           'NAME' => 'Каркасно-кирпичный',
           'ALIAS' => 'karkasno-kirpichnyy',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '236',
           'NAME' => 'Сруб из бруса',
           'ALIAS' => 'srub-iz-brusa',
           'SORT' => '200',
         ),
-        2 => 
+        2 =>
         array (
           'ID' => '238',
           'NAME' => 'Блочный',
           'ALIAS' => 'blochnyy',
           'SORT' => '400',
         ),
-        3 => 
+        3 =>
         array (
           'ID' => '239',
           'NAME' => 'Монолит',
           'ALIAS' => 'monolit',
           'SORT' => '500',
         ),
-        4 => 
+        4 =>
         array (
           'ID' => '240',
           'NAME' => 'Панельный',
           'ALIAS' => 'panelnyy',
           'SORT' => '600',
         ),
-        5 => 
+        5 =>
         array (
           'ID' => '241',
           'NAME' => 'Кирпич-монолит',
           'ALIAS' => 'kirpich-monolit',
           'SORT' => '700',
         ),
-        6 => 
+        6 =>
         array (
           'ID' => '242',
           'NAME' => 'Кирпичный',
           'ALIAS' => 'kirpichnyy',
           'SORT' => '800',
         ),
-        7 => 
+        7 =>
         array (
           'ID' => '235',
           'NAME' => 'Сруб из бревен',
@@ -75,29 +75,29 @@ return array (
         ),
       ),
     ),
-    'COUNTRY' => 
+    'COUNTRY' =>
     array (
       'SECTION_ID' => '243',
       'CODE' => 'COUNTRY',
       'NAME' => 'Страна производителя',
       'SORT' => 200,
-      'INPUT_TYPE' => '',
+      'INPUT_TYPE' => 'RADIO',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '245',
           'NAME' => 'Россия',
           'ALIAS' => 'iz_rossii',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '244',
           'NAME' => 'Китай',
@@ -106,29 +106,29 @@ return array (
         ),
       ),
     ),
-    'BRAND' => 
+    'BRAND' =>
     array (
       'SECTION_ID' => '246',
       'CODE' => 'BRAND',
       'NAME' => 'Бренд',
       'SORT' => 300,
-      'INPUT_TYPE' => '',
+      'INPUT_TYPE' => 'SELECT',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '247',
           'NAME' => 'Россия',
           'ALIAS' => 'rossiya',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '248',
           'NAME' => 'Китай',
@@ -137,36 +137,36 @@ return array (
         ),
       ),
     ),
-    'COLOR' => 
+    'COLOR' =>
     array (
       'SECTION_ID' => '249',
       'CODE' => 'COLOR',
       'NAME' => 'Цвет',
       'SORT' => 400,
-      'INPUT_TYPE' => '',
+      'INPUT_TYPE' => 'MULTISELECT',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '250',
           'NAME' => 'Желтый',
           'ALIAS' => 'jeltiy',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '252',
           'NAME' => 'Красный',
           'ALIAS' => 'krasnyy',
           'SORT' => '200',
         ),
-        2 => 
+        2 =>
         array (
           'ID' => '251',
           'NAME' => 'Зеленый',
@@ -175,7 +175,7 @@ return array (
         ),
       ),
     ),
-    'PRODUCT_GROUP' => 
+    'PRODUCT_GROUP' =>
     array (
       'SECTION_ID' => '253',
       'CODE' => 'PRODUCT_GROUP',
@@ -184,27 +184,27 @@ return array (
       'INPUT_TYPE' => '',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '254',
           'NAME' => 'Акции',
           'ALIAS' => 'offers',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '256',
           'NAME' => 'Распродажа',
           'ALIAS' => 'sale',
           'SORT' => '200',
         ),
-        2 => 
+        2 =>
         array (
           'ID' => '255',
           'NAME' => 'Новинки',
@@ -213,7 +213,7 @@ return array (
         ),
       ),
     ),
-    'OBJECT_TYPE' => 
+    'OBJECT_TYPE' =>
     array (
       'SECTION_ID' => '257',
       'CODE' => 'OBJECT_TYPE',
@@ -222,20 +222,20 @@ return array (
       'INPUT_TYPE' => '',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '259',
           'NAME' => 'Коттедж',
           'ALIAS' => 'kottedzh',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '258',
           'NAME' => 'Участок',
@@ -244,7 +244,7 @@ return array (
         ),
       ),
     ),
-    'OBJECT_PHASE' => 
+    'OBJECT_PHASE' =>
     array (
       'SECTION_ID' => '260',
       'CODE' => 'OBJECT_PHASE',
@@ -253,69 +253,69 @@ return array (
       'INPUT_TYPE' => '',
       'FILTER' => '1',
       'COMPARE' => '',
-      'SECTIONS' => 
+      'SECTIONS' =>
       array (
         39 => 0,
       ),
-      'VALUES' => 
+      'VALUES' =>
       array (
-        0 => 
+        0 =>
         array (
           'ID' => '263',
           'NAME' => 'Начато строительство',
           'ALIAS' => 'nachato-stroitelstvo',
           'SORT' => '100',
         ),
-        1 => 
+        1 =>
         array (
           'ID' => '264',
           'NAME' => 'Строительство первых этажей',
           'ALIAS' => 'stroitelstvo-pervykh-etazhey',
           'SORT' => '150',
         ),
-        2 => 
+        2 =>
         array (
           'ID' => '261',
           'NAME' => '1 год',
           'ALIAS' => '1-god',
           'SORT' => '200',
         ),
-        3 => 
+        3 =>
         array (
           'ID' => '262',
           'NAME' => 'Котлован',
           'ALIAS' => 'kotlovan',
           'SORT' => '300',
         ),
-        4 => 
+        4 =>
         array (
           'ID' => '265',
           'NAME' => 'Строительство середины здания',
           'ALIAS' => 'stroitelstvo-serediny-zdaniya',
           'SORT' => '400',
         ),
-        5 => 
+        5 =>
         array (
           'ID' => '268',
           'NAME' => 'Дом построен',
           'ALIAS' => 'dom-postroen',
           'SORT' => '500',
         ),
-        6 => 
+        6 =>
         array (
           'ID' => '269',
           'NAME' => 'Дом сдан в эксплуатацию',
           'ALIAS' => 'dom-sdan-v-ekspluatatsiyu',
           'SORT' => '600',
         ),
-        7 => 
+        7 =>
         array (
           'ID' => '266',
           'NAME' => 'Строительство верхних этажей',
           'ALIAS' => 'stroitelstvo-verkhnikh-etazhey',
           'SORT' => '700',
         ),
-        8 => 
+        8 =>
         array (
           'ID' => '267',
           'NAME' => 'Идут внутренние работы',
@@ -325,302 +325,302 @@ return array (
       ),
     ),
   ),
-  1 => 
+  1 =>
   array (
-    'karkasno-kirpichnyy' => 
+    'karkasno-kirpichnyy' =>
     array (
       0 => 'MATERIAL',
       1 => 0,
     ),
-    'srub-iz-brusa' => 
+    'srub-iz-brusa' =>
     array (
       0 => 'MATERIAL',
       1 => 1,
     ),
-    'blochnyy' => 
+    'blochnyy' =>
     array (
       0 => 'MATERIAL',
       1 => 2,
     ),
-    'monolit' => 
+    'monolit' =>
     array (
       0 => 'MATERIAL',
       1 => 3,
     ),
-    'panelnyy' => 
+    'panelnyy' =>
     array (
       0 => 'MATERIAL',
       1 => 4,
     ),
-    'kirpich-monolit' => 
+    'kirpich-monolit' =>
     array (
       0 => 'MATERIAL',
       1 => 5,
     ),
-    'kirpichnyy' => 
+    'kirpichnyy' =>
     array (
       0 => 'MATERIAL',
       1 => 6,
     ),
-    'srub-iz-breven' => 
+    'srub-iz-breven' =>
     array (
       0 => 'MATERIAL',
       1 => 7,
     ),
-    'iz_rossii' => 
+    'iz_rossii' =>
     array (
       0 => 'COUNTRY',
       1 => 0,
     ),
-    'iz_kitaya' => 
+    'iz_kitaya' =>
     array (
       0 => 'COUNTRY',
       1 => 1,
     ),
-    'rossiya' => 
+    'rossiya' =>
     array (
       0 => 'BRAND',
       1 => 0,
     ),
-    'kitay' => 
+    'kitay' =>
     array (
       0 => 'BRAND',
       1 => 1,
     ),
-    'jeltiy' => 
+    'jeltiy' =>
     array (
       0 => 'COLOR',
       1 => 0,
     ),
-    'krasnyy' => 
+    'krasnyy' =>
     array (
       0 => 'COLOR',
       1 => 1,
     ),
-    'zelenyy' => 
+    'zelenyy' =>
     array (
       0 => 'COLOR',
       1 => 2,
     ),
-    'offers' => 
+    'offers' =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 0,
     ),
-    'sale' => 
+    'sale' =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 1,
     ),
-    'novelty' => 
+    'novelty' =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 2,
     ),
-    'kottedzh' => 
+    'kottedzh' =>
     array (
       0 => 'OBJECT_TYPE',
       1 => 0,
     ),
-    'uchastok' => 
+    'uchastok' =>
     array (
       0 => 'OBJECT_TYPE',
       1 => 1,
     ),
-    'nachato-stroitelstvo' => 
+    'nachato-stroitelstvo' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 0,
     ),
-    'stroitelstvo-pervykh-etazhey' => 
+    'stroitelstvo-pervykh-etazhey' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 1,
     ),
-    '1-god' => 
+    '1-god' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 2,
     ),
-    'kotlovan' => 
+    'kotlovan' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 3,
     ),
-    'stroitelstvo-serediny-zdaniya' => 
+    'stroitelstvo-serediny-zdaniya' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 4,
     ),
-    'dom-postroen' => 
+    'dom-postroen' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 5,
     ),
-    'dom-sdan-v-ekspluatatsiyu' => 
+    'dom-sdan-v-ekspluatatsiyu' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 6,
     ),
-    'stroitelstvo-verkhnikh-etazhey' => 
+    'stroitelstvo-verkhnikh-etazhey' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 7,
     ),
-    'idut-vnutrennie-raboty' => 
+    'idut-vnutrennie-raboty' =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 8,
     ),
   ),
-  2 => 
+  2 =>
   array (
     '/catalog/' => '39',
     '/catalog/dom-dacha-nov-vtorich/' => '97',
   ),
-  3 => 
+  3 =>
   array (
-    237 => 
+    237 =>
     array (
       0 => 'MATERIAL',
       1 => 0,
     ),
-    236 => 
+    236 =>
     array (
       0 => 'MATERIAL',
       1 => 1,
     ),
-    238 => 
+    238 =>
     array (
       0 => 'MATERIAL',
       1 => 2,
     ),
-    239 => 
+    239 =>
     array (
       0 => 'MATERIAL',
       1 => 3,
     ),
-    240 => 
+    240 =>
     array (
       0 => 'MATERIAL',
       1 => 4,
     ),
-    241 => 
+    241 =>
     array (
       0 => 'MATERIAL',
       1 => 5,
     ),
-    242 => 
+    242 =>
     array (
       0 => 'MATERIAL',
       1 => 6,
     ),
-    235 => 
+    235 =>
     array (
       0 => 'MATERIAL',
       1 => 7,
     ),
-    245 => 
+    245 =>
     array (
       0 => 'COUNTRY',
       1 => 0,
     ),
-    244 => 
+    244 =>
     array (
       0 => 'COUNTRY',
       1 => 1,
     ),
-    247 => 
+    247 =>
     array (
       0 => 'BRAND',
       1 => 0,
     ),
-    248 => 
+    248 =>
     array (
       0 => 'BRAND',
       1 => 1,
     ),
-    250 => 
+    250 =>
     array (
       0 => 'COLOR',
       1 => 0,
     ),
-    252 => 
+    252 =>
     array (
       0 => 'COLOR',
       1 => 1,
     ),
-    251 => 
+    251 =>
     array (
       0 => 'COLOR',
       1 => 2,
     ),
-    254 => 
+    254 =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 0,
     ),
-    256 => 
+    256 =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 1,
     ),
-    255 => 
+    255 =>
     array (
       0 => 'PRODUCT_GROUP',
       1 => 2,
     ),
-    259 => 
+    259 =>
     array (
       0 => 'OBJECT_TYPE',
       1 => 0,
     ),
-    258 => 
+    258 =>
     array (
       0 => 'OBJECT_TYPE',
       1 => 1,
     ),
-    263 => 
+    263 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 0,
     ),
-    264 => 
+    264 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 1,
     ),
-    261 => 
+    261 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 2,
     ),
-    262 => 
+    262 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 3,
     ),
-    265 => 
+    265 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 4,
     ),
-    268 => 
+    268 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 5,
     ),
-    269 => 
+    269 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 6,
     ),
-    266 => 
+    266 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 7,
     ),
-    267 => 
+    267 =>
     array (
       0 => 'OBJECT_PHASE',
       1 => 8,
