@@ -15,16 +15,16 @@ use \Bitrix\Main\Config\Option;
 
 // $arParams
 
-$arResult["ITEMS"] = array();
+$arResult["ITEMS"] = [];
 
 list($attribs, $sefCodes, $catalogSections, $values) = Config();
 
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
 $arResult["CURRENT_SECTION_ID"] = null;
-$arResult["SELECTED_VALUES"] = array();
+$arResult["SELECTED_VALUES"] = [];
 
-// RODZETA_CATALOG_FILTER need for other components parametr $arParams["FILTER_NAME"]
-$GLOBALS["RODZETA_CATALOG_FILTER"] = array();
+// NOTE code RODZETA_CATALOG_FILTER need for other components parametr $arParams["FILTER_NAME"]
+$GLOBALS["RODZETA_CATALOG_FILTER"] = [];
 
 $currentUrlSegments = array_flip(array_filter(
   explode("/", $arResult["CURRENT_SECTION_URL"])));
@@ -85,8 +85,8 @@ if (!empty($arResult["CURRENT_SECTION_ID"])) {
   }
 }
 
-//$this->SetResultCacheKeys(array(
+//$this->SetResultCacheKeys([
 //  "ID",
-//));
+//]);
 
 $this->IncludeComponentTemplate();

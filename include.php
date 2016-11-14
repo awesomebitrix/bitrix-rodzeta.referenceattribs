@@ -11,5 +11,4 @@ require __DIR__ . "/.init.php";
 
 use Bitrix\Main\Loader;
 
-// TODO check for including
 Loader::includeModule("iblock");

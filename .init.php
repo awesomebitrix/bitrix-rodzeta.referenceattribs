@@ -9,12 +9,12 @@ namespace Rodzeta\Referenceattribs;
 
 use Bitrix\Main\Config\Option;
 
-define(__NAMESPACE__ . "\_APP", __DIR__ . "/");
-define(__NAMESPACE__ . "\_LIB", __DIR__  . "/lib/");
-define(__NAMESPACE__ . "\_FILE_ATTRIBS", "/upload/.rodzeta.referenceattribs.php");
+define(__NAMESPACE__ . "\APP", __DIR__ . "/");
+define(__NAMESPACE__ . "\LIB", __DIR__  . "/lib/");
+define(__NAMESPACE__ . "\FILE_ATTRIBS", "/upload/.rodzeta.referenceattribs.php");
 
-require _LIB . "encoding/php-array.php";
-require _LIB . "filter.php";
+require LIB . "encoding/php-array.php";
+require LIB . "filter.php";
 
 function CreateCache($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
@@ -29,24 +29,24 @@ function CreateCache($attribs) {
 
 	// create section RODZETA_REFERENCES
 	$res = \CIBlockSection::GetList(
-		array("SORT" => "ASC"),
-		array(
+		["SORT" => "ASC"],
+		[
 			"IBLOCK_ID" => $iblockId,
 			"CODE" => "RODZETA_REFERENCES",
-		),
+		],
 		true,
-		array("*")
+		["*"]
 	);
 	$sectionReferences = $res->GetNext();
 	if (empty($sectionReferences["ID"])) {
 		$iblockSection = new \CIBlockSection();
-		$mainSectionId = $iblockSection->Add(array(
+		$mainSectionId = $iblockSection->Add([
 		  "IBLOCK_ID" => $iblockId,
 		  "NAME" => "Справочники",
 		  "CODE" => "RODZETA_REFERENCES",
 		  "SORT" => 10000,
 			"ACTIVE" => "Y",
-	  ));
+	  ]);
 	  if (!empty($mainSectionId)) {
 	  	Option::set("rodzeta.referenceattribs", "section_id", $mainSectionId);
 	  }
@@ -54,10 +54,10 @@ function CreateCache($attribs) {
 		$mainSectionId = $sectionReferences["ID"];
 	}
 
-	$sefCodes = array();
-	$result = array();
-	$errors = array();
-	$values = array();
+	$sefCodes = [];
+	$result = [];
+	$errors = [];
+	$values = [];
 	foreach ($attribs as $row) {
 		$row["CODE"] = trim($row["CODE"]);
 		if ($row["CODE"] == "" || count(array_filter($row)) == 0) {
@@ -68,35 +68,35 @@ function CreateCache($attribs) {
 		if ($mainSectionId) {
 			// create or update section for attrib
 			$res = \CIBlockSection::GetList(
-				array("SORT" => "ASC"),
-				array(
+				["SORT" => "ASC"],
+				[
 					"IBLOCK_ID" => $iblockId,
 					"SECTION_ID" => $mainSectionId,
 					"CODE" => $row["CODE"],
-				),
+				],
 				true,
-				array("*")
+				["*"]
 			);
 			$sectionGroup = $res->GetNext();
 			$iblockSection = new \CIBlockSection();
 			if (empty($sectionGroup["ID"])) {
-				$row["SECTION_ID"] = $iblockSection->Add(array(
+				$row["SECTION_ID"] = $iblockSection->Add([
 				  "IBLOCK_ID" => $iblockId,
 				  "IBLOCK_SECTION_ID" => $mainSectionId,
 				  "NAME" => $row["NAME"],
 				  "CODE" => $row["CODE"],
 				  "SORT" => $row["SORT"],
 					"ACTIVE" => "Y",
-			  ));
+			  ]);
 			} else {
 				$row["SECTION_ID"] = $sectionGroup["ID"];
-				$iblockSection->Update($row["SECTION_ID"], array(
+				$iblockSection->Update($row["SECTION_ID"], [
 				  "IBLOCK_ID" => $iblockId,
 				  "NAME" => $row["NAME"],
 				  "CODE" => $row["CODE"],
 				  "SORT" => $row["SORT"],
 					"ACTIVE" => "Y",
-			  ));
+			  ]);
 			}
 		}
 
@@ -106,22 +106,22 @@ function CreateCache($attribs) {
 			$v["ALIAS"] = trim($v["ALIAS"]);
 			if ($v["NAME"] != "" && $v["ALIAS"] != "") {
 				if (!isset($sefCodes[$v["ALIAS"]])) {
-					$sefCodes[$v["ALIAS"]] = array($row["CODE"], $i);
+					$sefCodes[$v["ALIAS"]] = [$row["CODE"], $i];
 
 					if ($mainSectionId) {
-						$sectionValue = array();
+						$sectionValue = [];
 						// create or update section for value
-						$filterValue = array(
+						$filterValue = [
 							"IBLOCK_ID" => $iblockId,
 							"SECTION_ID" => $row["SECTION_ID"],
-						);
+						];
 						if (!empty($v["ID"])) {
 							$filterValue["ID"] = $v["ID"];
 							$res = \CIBlockSection::GetList(
-								array("SORT" => "ASC"),
+								["SORT" => "ASC"],
 								$filterValue,
 								true,
-								array("*")
+								["*"]
 							);
 							$sectionValue = $res->GetNext();
 						}
@@ -130,10 +130,10 @@ function CreateCache($attribs) {
 							unset($filterValue["ID"]);
 							$filterValue["CODE"] = $v["ALIAS"];
 							$res = \CIBlockSection::GetList(
-								array("SORT" => "ASC"),
+								["SORT" => "ASC"],
 								$filterValue,
 								true,
-								array("*")
+								["*"]
 							);
 							$sectionValue = $res->GetNext();
 						}
@@ -142,27 +142,27 @@ function CreateCache($attribs) {
 							$v["SORT"] = ($i + 1) * 100;
 						}
 						if (empty($sectionValue["ID"])) {
-							$v["ID"] = $iblockSection->Add(array(
+							$v["ID"] = $iblockSection->Add([
 							  "IBLOCK_ID" => $iblockId,
 							  "IBLOCK_SECTION_ID" => $row["SECTION_ID"],
 							  "NAME" => $v["NAME"],
 							  "CODE" => $v["ALIAS"],
 							  "SORT" => $v["SORT"],
 								"ACTIVE" => "Y",
-						  ));
+						  ]);
 						} else {
 							$v["ID"] = $sectionValue["ID"];
-							$iblockSection->Update($v["ID"], array(
+							$iblockSection->Update($v["ID"], [
 							  "IBLOCK_ID" => $iblockId,
 							  "NAME" => $v["NAME"],
 							  "CODE" => $v["ALIAS"],
 							  "SORT" => $v["SORT"],
 								"ACTIVE" => "Y",
-						  ));
+						  ]);
 						}
 
 						// collect value ids
-						$values[$v["ID"]] = array($row["CODE"], $i);
+						$values[$v["ID"]] = [$row["CODE"], $i];
 					}
 				} else {
 					$errors["BY_ALIAS"][] = $row["CODE"] . ": " . $v["ALIAS"];
@@ -189,15 +189,15 @@ function CreateCache($attribs) {
 	$res = \CIBlockSection::GetByID(Option::get("rodzeta.site", "section_content", 1));
 	$sectionCatalog = $res->GetNext();
 	$res = \CIBlockSection::GetList(
-		array("SORT" => "ASC"),
-		array(
+		["SORT" => "ASC"],
+		[
 			"IBLOCK_ID" => $iblockId,
 			"ACTIVE" => "Y",
-		),
+		],
 		true,
-		array("*")
+		["*"]
 	);
-	$catalogSections = array();
+	$catalogSections = [];
 	$l = strlen($sectionCatalog["SECTION_PAGE_URL"]);
 	while ($row = $res->GetNext()) {
 		if (substr($row["SECTION_PAGE_URL"], 0, $l) === $sectionCatalog["SECTION_PAGE_URL"]) {
@@ -205,15 +205,15 @@ function CreateCache($attribs) {
 		}
 	}
 
-	\Encoding\PhpArray\Write($basePath . _FILE_ATTRIBS, array(
+	\Encoding\PhpArray\Write($basePath . FILE_ATTRIBS, [
 		$result, $sefCodes, $catalogSections, $values
-	));
+	]);
 
 	return $errors;
 }
 
 function Config() {
-	return include $_SERVER["DOCUMENT_ROOT"] . _FILE_ATTRIBS;
+	return include $_SERVER["DOCUMENT_ROOT"] . FILE_ATTRIBS;
 }
 
 function Url($segments, $param) {
@@ -229,7 +229,7 @@ function Init(&$item) {
 	if (empty($config)) {
 		$config = Config();
 	}
-	$res = \CIBlockElement::GetElementGroups($item["ID"], true, array("ID"));
+	$res = \CIBlockElement::GetElementGroups($item["ID"], true, ["ID"]);
 	while ($section = $res->Fetch()) {
 		if (isset($config[3][$section["ID"]])) {
 			list($code, $valueIdx) = $config[3][$section["ID"]];
@@ -238,12 +238,12 @@ function Init(&$item) {
 				continue;
 			}
 			if (!isset($item["PROPERTIES"][$code])) {
-				$item["PROPERTIES"][$code] = array(
+				$item["PROPERTIES"][$code] = [
 					"CODE" => &$config[0][$code]["CODE"],
 					"NAME" => &$config[0][$code]["NAME"],
-					"VALUE" => array(&$config[0][$code]["VALUES"][$valueIdx]["NAME"]),
-					"~VALUE" => array(&$config[0][$code]["VALUES"][$valueIdx]),
-				);
+					"VALUE" => [&$config[0][$code]["VALUES"][$valueIdx]["NAME"]],
+					"~VALUE" => [&$config[0][$code]["VALUES"][$valueIdx]],
+				];
 			} else {
 				$item["PROPERTIES"][$code]["VALUE"][] =
 					&$config[0][$code]["VALUES"][$valueIdx]["NAME"];
@@ -254,31 +254,6 @@ function Init(&$item) {
   }
 }
 
-/*
-
-function BuildTree(&$elements, $parentId = 0) {
-	$branch = array();
-	foreach ($elements as &$element) {
-		if ($element["PARENT_ID"] == $parentId) {
-			$children = BuildTree($elements, $element["ID"]);
-			if ($children) {
-				$element["CHILDREN"] = $children;
-			}
-			$branch[$element["ID"]] = $element;
-			unset($element);
-		}
-	}
-	return $branch;
-}
-
-function PrintTree($elements, &$result, $level = 0) {
-	foreach ($elements as $element) {
-		$result[$element["ID"]] = str_repeat(" -", $level) . " " . $element["NAME"];
-		PrintTree($element["CHILDREN"], $result, $level + 1);
-	}
-}
-*/
-
 function AppendValues($data, $n, $v) {
 	for ($i = 0; $i < $n; $i++) {
 		$data[] = $v;
@@ -288,10 +263,10 @@ function AppendValues($data, $n, $v) {
 
 function SectionsTreeList($currentIblockId) {
 	$resSections = \CIBlockSection::GetTreeList(
-		array("IBLOCK_ID" => $currentIblockId),
-		array("ID", "NAME", "DEPTH_LEVEL")
+		["IBLOCK_ID" => $currentIblockId],
+		["ID", "NAME", "DEPTH_LEVEL"]
 	);
-	$sections = array();
+	$sections = [];
 	while ($section = $resSections->GetNext()) {
 	  $sections[$section["ID"]] = str_repeat(" . ", $section["DEPTH_LEVEL"] - 1) . $section["NAME"];
 	}

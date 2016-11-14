@@ -16,7 +16,7 @@ function Filter($segments, $config = null) {
 	}
 	list($attribs, $sefCodes, $catalogSections, $values) = Config();
 
-	$filterParams = array();
+	$filterParams = [];
 	// detect current section url
 	$currentUrl = "/";
 	while (count($segments) > 0) {
@@ -31,43 +31,43 @@ function Filter($segments, $config = null) {
 	$currentSectionId = $catalogSections[$url];
 
 	// create bitrix filter params
-	$selectedIds = array();
-	$selectedGroups = array();
+	$selectedIds = [];
+	$selectedGroups = [];
 	foreach ($filterParams as $alias) {
 		if (!isset($sefCodes[$alias])) {
 			// nonvalid param in url
-			return array(false, $currentUrl, $currentSectionId, array());
+			return [false, $currentUrl, $currentSectionId, []];
 		}
 		list($code, $valueIdx) = $sefCodes[$alias];
 		$param = $attribs[$code]["VALUES"][$valueIdx];
 		$selectedGroups[$attribs[$code]["SECTION_ID"]][] = $param["ID"];
 		$selectedIds[$param["ID"]] = 1;
 	}
-	$result = array();
+	$result = [];
 	foreach ($selectedGroups as $ids) {
-		$result[] = array("SECTION_ID" => $ids);
+		$result[] = ["SECTION_ID" => $ids];
 	}
 
 	$iblockId = Option::get("rodzeta.site", "iblock_content", 1);
 	if (count($selectedGroups)) {
-		$result = array(
+		$result = [
 			"IBLOCK_ID" => $iblockId,
 			"INCLUDE_SUBSECTIONS" => "Y",
 			"LOGIC" => "AND",
 			$result
-		);
+		];
 	} else {
-		$result = array(
+		$result = [
 			"IBLOCK_ID" => $iblockId,
 			"INCLUDE_SUBSECTIONS" => "Y",
-		);
+		];
 	}
 	if ($currentSectionId != Option::get("rodzeta.site", "section_content", 1)) {
-		$result["ID"] = \CIBlockElement::SubQuery("ID", array(
+		$result["ID"] = \CIBlockElement::SubQuery("ID", [
       "IBLOCK_ID" => $iblockId,
       "SECTION_ID" => $currentSectionId,
       "INCLUDE_SUBSECTIONS" => "Y",
-    ));
+    ]);
 	}
-	return array($result, $currentUrl, $currentSectionId, $selectedIds);
+	return [$result, $currentUrl, $currentSectionId, $selectedIds];
 }

@@ -26,20 +26,20 @@ $currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 Loc::loadMessages(__FILE__);
 
-$tabControl = new \CAdminTabControl("tabControl", array(
-	array(
+$tabControl = new \CAdminTabControl("tabControl", [
+	[
 		"DIV" => "edit2",
 		"TAB" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_DATA_TAB_SET"),
-		"TITLE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_DATA_TAB_TITLE_SET", array(
-			"#FILE#" => _FILE_ATTRIBS
-		)),
-  ),
-  array(
+		"TITLE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_DATA_TAB_TITLE_SET", [
+			"#FILE#" => FILE_ATTRIBS
+		]),
+  ],
+  [
 		"DIV" => "edit1",
 		"TAB" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_MAIN_TAB_SET"),
 		"TITLE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_MAIN_TAB_TITLE_SET"),
-  ),
-));
+  ],
+]);
 
 if ($request->isPost() && \check_bitrix_sessid()) {
 	if (!empty($save) || !empty($restore)) {
@@ -48,18 +48,18 @@ if ($request->isPost() && \check_bitrix_sessid()) {
 
 		$errors = CreateCache($request->getPost("attribs"));
 		if (!empty($errors["BY_ALIAS"])) {
-			\CAdminMessage::showMessage(array(
-		    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", array(
+			\CAdminMessage::showMessage([
+		    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", [
 					"#VALUE#" => implode(", ", $errors["BY_ALIAS"])
-				)),
+				]),
 		    "TYPE" => "ERROR",
-		  ));
+		  ]);
 		}
 
-		\CAdminMessage::showMessage(array(
+		\CAdminMessage::showMessage([
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"),
 	    "TYPE" => "OK",
-	  ));
+	  ]);
 	}
 }
 
@@ -160,7 +160,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 								</div>
 							</td>
 							<td nowrap>
-								<?php foreach (AppendValues($row["VALUES"], 10, array("", "")) as $n => $v) { ?>
+								<?php foreach (AppendValues($row["VALUES"], 10, ["", ""]) as $n => $v) { ?>
 									<input type="hidden" name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ID]" value="<?= htmlspecialcharsex($v["ID"]) ?>">
 									<input type="text" placeholder="Значение"
 										name="attribs[<?= $i ?>][VALUES][<?= $n ?>][NAME]"
@@ -205,9 +205,9 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 				$currentIblockId,
 				"iblock_type",
 				"iblock_content",
-				array(
+				[
 					"MIN_PERMISSION" => "R",
-				),
+				],
 				"",
 				"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
 			) ?>
