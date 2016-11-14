@@ -214,20 +214,6 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 		</td>
 	</tr>
 
-	<?php /*
-	<tr>
-		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Раздел "Справочники"</label>
-		</td>
-		<td class="adm-detail-content-cell-r" width="50%">
-			<select name="section_id" id="rodzeta-referenceattribs-section-id"
-					data-value="<?= Option::get("rodzeta.referenceattribs", "section_id") ?>">
-				<option value="">(выберите раздел)</option>
-			</select>
-		</td>
-	</tr>
-	*/ ?>
-
 	<tr>
 		<td class="adm-detail-content-cell-l" width="50%">
 			<label>Раздел "Каталог"</label>
