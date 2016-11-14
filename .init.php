@@ -21,10 +21,7 @@ function CreateCache($attribs) {
 	$iblockId = Option::get("rodzeta.site", "iblock_content", 1);
 
 	$sort = function ($a, $b) {
-		if ($a["SORT"] == $b["SORT"]) {
-			return 0;
-		}
-		return ((int)$a["SORT"] < (int)$b["SORT"]) ? -1 : 1;
+		return (int)$a["SORT"] <=> (int)$b["SORT"];
 	};
 
 	// create section RODZETA_REFERENCES
