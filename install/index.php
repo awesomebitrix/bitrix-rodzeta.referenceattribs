@@ -64,11 +64,13 @@ class rodzeta_referenceattribs extends CModule {
 	    true, true
     );
 
+    /*
     // copy example if not exists
 		$fname = $_SERVER["DOCUMENT_ROOT"] . "/upload/." . $this->MODULE_ID . ".php";
 		if (!file_exists($fname)) {
 			copy($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/data/." . $this->MODULE_ID . ".php", $fname);
 		}
+		*/
 
 		return true;
 	}
@@ -80,9 +82,14 @@ class rodzeta_referenceattribs extends CModule {
 	}
 
 	function DoInstall() {
-		if (version_compare(PHP_VERSION, '7', '<')) {
-			global $APPLICATION;
-   		$APPLICATION->ThrowException(Loc::getMessage("RODZETA_REQUIREMENTS_PHP_VERSION"));
+		// check module requirements
+		global $APPLICATION;
+		if (version_compare(PHP_VERSION, "7", "<")) {
+			$APPLICATION->ThrowException(Loc::getMessage("RODZETA_REQUIREMENTS_PHP_VERSION"));
+			return false;
+		}
+		if (!defined("BX_UTF")) {
+			$APPLICATION->ThrowException(Loc::getMessage("RODZETA_REQUIREMENTS_BITRIX_UTF8"));
 			return false;
 		}
 
