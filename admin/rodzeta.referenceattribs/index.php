@@ -59,8 +59,6 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 <form action="" method="post">
 	<?= bitrix_sessid_post() ?>
 
-	<div class="adm-detail-title">Настройки для свойств-справочников</div>
-
 	<table width="100%">
 		<tr>
 			<td class="adm-detail-content-cell-l" width="30%">
@@ -95,7 +93,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 </form>
 
-<?php if (0 && $formSaved) { ?>
+<?php if ($formSaved) { ?>
 
 	<script>
 		// close after submit

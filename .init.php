@@ -224,6 +224,12 @@ function CreateCache($attribs) {
 	return $errors;
 }
 
+function Select() {
+	$fname = CONFIG . "/references.php";
+	return is_readable($fname)? include $fname
+		: [	[], [], [], [] ];
+}
+
 function Config() {
 	return include $_SERVER["DOCUMENT_ROOT"] . FILE_ATTRIBS;
 }
@@ -280,7 +286,8 @@ function SectionsTreeList($currentIblockId) {
 	);
 	$sections = [];
 	while ($section = $resSections->GetNext()) {
-	  $sections[$section["ID"]] = str_repeat(" . ", $section["DEPTH_LEVEL"] - 1) . $section["NAME"];
+	  $sections[$section["ID"]] = str_repeat(" . ", $section["DEPTH_LEVEL"] - 1)
+	  	. $section["NAME"];
 	}
 	return $sections;
 }

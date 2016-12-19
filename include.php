@@ -45,7 +45,7 @@ EventManager::getInstance()->addEventHandler("main", "OnPanelCreate", function (
 	]);
 
 	$link = "javascript:" . $APPLICATION->GetPopupLink([
-		"URL" => URL_ADMIN . "references/",
+		"URL" => URL_ADMIN . "references.php",
 		"PARAMS" => [
 			"resizable" => true,
 			//"width" => 780,
