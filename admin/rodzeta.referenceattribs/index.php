@@ -49,15 +49,66 @@ $currentOptions["fields"] = array_merge(
 	$currentOptions["fields"]
 );
 */
+$currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
+
 
 ?>
+
+<script>
+
+function RodzetaReferenceattribsUpdate($selectDest) {
+	var $selectIblock = document.getElementById("iblock_content");
+	var iblockId = $selectIblock.value;
+	var selectedOption = $selectDest.getAttribute("data-value");
+	BX.ajax.loadJSON("/bitrix/admin/rodzeta.referenceattribs/sectionoptions.php?iblock_id=" + iblockId, function (data) {
+		var html = ["<option value=''>(выберите раздел)</option>"];
+		for (var k in data) {
+			var selected = selectedOption == k? "selected" : "";
+			html.push("<option " + selected + " value='" + k + "'>" + data[k] + "</option>");
+		}
+		$selectDest.innerHTML = html.join("\n");
+	});
+};
+
+</script>
 
 <form action="" method="post">
 	<?= bitrix_sessid_post() ?>
 
-	<div class="adm-detail-title">Данные аккаунта Bitrix24</div>
+	<div class="adm-detail-title">Настройки для свойств-справочников</div>
 
 	<table width="100%">
+		<tr>
+			<td class="adm-detail-content-cell-l" width="50%">
+				<label>Инфоблок содержащий "Справочники"</label>
+			</td>
+			<td class="adm-detail-content-cell-r" width="50%">
+				<?= GetIBlockDropDownListEx(
+					$currentIblockId,
+					"iblock_type",
+					"iblock_content",
+					[
+						"MIN_PERMISSION" => "R",
+					],
+					"",
+					"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
+				) ?>
+			</td>
+		</tr>
+
+	<tr>
+		<td class="adm-detail-content-cell-l" width="50%">
+			<label>Раздел "Каталог"</label>
+		</td>
+		<td class="adm-detail-content-cell-r" width="50%">
+			<select name="section_content" id="rodzeta-referenceattribs-catalogsection-id"
+					data-value="<?= Option::get("rodzeta.site", "section_content", 1) ?>">
+				<option value="">(выберите раздел)</option>
+			</select>
+		</td>
+	</tr>
+
+
 		<tr>
 			<td>
 				<input type="text" size="30" name="bitrix24_portal_url"
@@ -108,3 +159,10 @@ $currentOptions["fields"] = array_merge(
 	</script>
 
 <?php } ?>
+
+<script>
+
+//RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
+RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-catalogsection-id"));
+
+</script>
