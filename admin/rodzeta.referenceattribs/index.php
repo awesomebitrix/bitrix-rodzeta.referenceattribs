@@ -7,7 +7,7 @@
 
 namespace Rodzeta\Referenceattribs;
 
-use Bitrix\Main\{Application, Localization\Loc};
+use Bitrix\Main\{Application, Localization\Loc, Config\Option};
 
 require $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php";
 //require $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php";
@@ -79,10 +79,10 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 	<table width="100%">
 		<tr>
-			<td class="adm-detail-content-cell-l" width="50%">
+			<td class="adm-detail-content-cell-l" width="30%">
 				<label>Инфоблок содержащий "Справочники"</label>
 			</td>
-			<td class="adm-detail-content-cell-r" width="50%">
+			<td class="adm-detail-content-cell-r" width="70%">
 				<?= GetIBlockDropDownListEx(
 					$currentIblockId,
 					"iblock_type",
@@ -96,43 +96,15 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 			</td>
 		</tr>
 
-	<tr>
-		<td class="adm-detail-content-cell-l" width="50%">
-			<label>Раздел "Каталог"</label>
-		</td>
-		<td class="adm-detail-content-cell-r" width="50%">
-			<select name="section_content" id="rodzeta-referenceattribs-catalogsection-id"
-					data-value="<?= Option::get("rodzeta.site", "section_content", 1) ?>">
-				<option value="">(выберите раздел)</option>
-			</select>
-		</td>
-	</tr>
-
-
 		<tr>
-			<td>
-				<input type="text" size="30" name="bitrix24_portal_url"
-					value="<?= htmlspecialcharsex($currentOptions["bitrix24"]["portal_url"]) ?>"
-					style="width:96%;"
-					placeholder="Адрес портала Bitrix24">
+			<td class="adm-detail-content-cell-l" width="30%">
+				<label>Раздел "Каталог"</label>
 			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input type="text" size="30" name="bitrix24_login"
-					value="<?= htmlspecialcharsex($currentOptions["bitrix24"]["login"]) ?>"
-					style="width:96%;"
-					placeholder='LOGIN пользователя-"лидогенератора"'>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<input name="bitrix24_password" size="30" type="password"
-					style="width:96%;"
-					readonly
-	    		onfocus="this.removeAttribute('readonly')"
-	    		value="<?= htmlspecialcharsex($currentOptions["bitrix24"]["password"]) ?>"
-	    		placeholder='PASSWORD пользователя-"лидогенератора"'>
+			<td class="adm-detail-content-cell-r" width="70%">
+				<select name="section_content" id="rodzeta-referenceattribs-catalogsection-id"
+						data-value="<?= Option::get("rodzeta.site", "section_content", 1) ?>">
+					<option value="">(выберите раздел)</option>
+				</select>
 			</td>
 		</tr>
 	</table>
