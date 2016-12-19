@@ -19,7 +19,6 @@ function Update($data) {
 
 function Select() {
 	$fname = CONFIG . "/options.php";
-	var_dump($fname);
 	return is_readable($fname)? include $fname : [
 		"iblock_content" => 1,
 		"section_content" => 1,
