@@ -17,9 +17,11 @@ const URL_ADMIN = "/bitrix/admin/" . ID . "/";
 define(__NAMESPACE__ . "\CONFIG",
 	$_SERVER["DOCUMENT_ROOT"] . "/upload/"
 	. (substr($_SERVER["SERVER_NAME"], 0, 4) == "www."?
-			substr($_SERVER["SERVER_NAME"], 4) : $_SERVER["SERVER_NAME"]));
+			substr($_SERVER["SERVER_NAME"], 4) : $_SERVER["SERVER_NAME"])
+	. "/." . ID);
 
 require LIB . "encoding/php-array.php";
+require LIB . "options.php";
 require LIB . "filter.php";
 
 function StorageInit() {

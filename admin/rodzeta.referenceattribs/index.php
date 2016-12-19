@@ -7,7 +7,7 @@
 
 namespace Rodzeta\Referenceattribs;
 
-use Bitrix\Main\{Application, Localization\Loc, Config\Option};
+use Bitrix\Main\{Application, Localization\Loc};
 
 require $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php";
 //require $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php";
@@ -31,26 +31,10 @@ StorageInit();
 $formSaved = check_bitrix_sessid() && $request->isPost();
 if ($formSaved) {
 	$data = $request->getPostList();
-	//Options\Update($request->getPostList());
+	Options\Update($request->getPostList());
 }
 
-/*
 $currentOptions = Options\Select();
-$currentOptions["fields"] = array_merge(
-	[
-		"AUTHOR" => ["AUTHOR", "Ваше имя"],
-		"AUTHOR_EMAIL" => ["AUTHOR_EMAIL", "Ваш e-mail"],
-		"TEXT" => ["TEXT", "Ваше сообщение"],
-		//
-		"USER_REGION" => ["USER_REGION", "Регион"],
-		"USER_PHONE" => ["USER_PHONE", "Телефон"],
-		"USER_SITE" => ["USER_SITE", "Сайт"],
-	],
-	$currentOptions["fields"]
-);
-*/
-$currentIblockId = Option::get("rodzeta.site", "iblock_content", 1);
-
 
 ?>
 
@@ -84,7 +68,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 			</td>
 			<td class="adm-detail-content-cell-r" width="70%">
 				<?= GetIBlockDropDownListEx(
-					$currentIblockId,
+					$currentOptions["iblock_content"],
 					"iblock_type",
 					"iblock_content",
 					[
@@ -102,7 +86,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 			</td>
 			<td class="adm-detail-content-cell-r" width="70%">
 				<select name="section_content" id="rodzeta-referenceattribs-catalogsection-id"
-						data-value="<?= Option::get("rodzeta.site", "section_content", 1) ?>">
+						data-value="<?= $currentOptions["section_content"] ?>">
 					<option value="">(выберите раздел)</option>
 				</select>
 			</td>
@@ -135,6 +119,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 <script>
 
 //RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
-RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-catalogsection-id"));
+RodzetaReferenceattribsUpdate(document.getElementById(
+	"rodzeta-referenceattribs-catalogsection-id"));
 
 </script>
