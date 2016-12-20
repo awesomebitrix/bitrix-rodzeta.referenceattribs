@@ -31,64 +31,47 @@ function StorageInit() {
 	}
 }
 
+/*
+function AddReference($row) {
+
+}
+*/
+
 function FromImport($attribs) {
-	// TODO make attribs structure
 	$result = [];
-	echo "<pre>";
 	foreach (explode("\n\n", $attribs) as $group) {
 		$referenceGroup = array_filter(array_map("trim", explode("\n", trim($group))));
 		if (count($referenceGroup) == 0) {
 			continue;
 		}
-		$referenceName = array_shift($referenceGroup);
-		$referenceName = array_map("trim", explode(";", $referenceName));
+		list($referenceName, $referenceCode, $referenceSort) = array_map("trim", explode(";", array_shift($referenceGroup)));
 		$referenceValues = [];
 		foreach ($referenceGroup as $v) {
-			$referenceValues[] = array_map("trim", explode(";", $v));
+			list($valueName, $valueSef, $valueSort) = array_map("trim", explode(";", $v));
+			$referenceValues[] = [
+				"NAME" => $valueName,
+        "ALIAS" => $valueSef,
+        "SORT" => $valueSort,
+			];
 		}
-		var_dump($referenceName, $referenceValues);
+		$result[$referenceCode] = [
+			"CODE" => $referenceCode,
+			"NAME" => $referenceName,
+			"SORT" => $referenceSort,
+			"VALUES" => $referenceValues,
+		];
 	}
-	echo "</pre>";
 	return $result;
 }
 
 function Update($attribs) {
-	return [];
-
-	$currentOptions = Options\Select();
-	$iblockId = $currentOptions["iblock_content"];
-
 	$sort = function ($a, $b) {
 		return (int)$a["SORT"] <=> (int)$b["SORT"];
 	};
 
-	// create section RODZETA_REFERENCES
-	$res = \CIBlockSection::GetList(
-		["SORT" => "ASC"],
-		[
-			"IBLOCK_ID" => $iblockId,
-			"CODE" => "RODZETA_REFERENCES",
-		],
-		true,
-		["*"]
-	);
-	$sectionReferences = $res->GetNext();
-	if (empty($sectionReferences["ID"])) {
-		$iblockSection = new \CIBlockSection();
-		$mainSectionId = $iblockSection->Add([
-		  "IBLOCK_ID" => $iblockId,
-		  "NAME" => "Справочники",
-		  "CODE" => "RODZETA_REFERENCES",
-		  "SORT" => 10000,
-			"ACTIVE" => "Y",
-	  ]);
-	  if (!empty($mainSectionId)) {
-	  	// TODO set from settings pupup
-	  	Option::set("rodzeta.referenceattribs", "section_id", $mainSectionId);
-	  }
-	} else {
-		$mainSectionId = $sectionReferences["ID"];
-	}
+	$currentOptions = Options\Select();
+	$iblockId = $currentOptions["iblock_content"];
+	$mainSectionId = $currentOptions["section_references"];
 
 	$sefCodes = [];
 	$result = [];
@@ -113,9 +96,9 @@ function Update($attribs) {
 				true,
 				["*"]
 			);
-			$sectionGroup = $res->GetNext();
+			$referenceSection = $res->GetNext();
 			$iblockSection = new \CIBlockSection();
-			if (empty($sectionGroup["ID"])) {
+			if (empty($referenceSection["ID"])) {
 				$row["SECTION_ID"] = $iblockSection->Add([
 				  "IBLOCK_ID" => $iblockId,
 				  "IBLOCK_SECTION_ID" => $mainSectionId,
@@ -125,7 +108,7 @@ function Update($attribs) {
 					"ACTIVE" => "Y",
 			  ]);
 			} else {
-				$row["SECTION_ID"] = $sectionGroup["ID"];
+				$row["SECTION_ID"] = $referenceSection["ID"];
 				$iblockSection->Update($row["SECTION_ID"], [
 				  "IBLOCK_ID" => $iblockId,
 				  "NAME" => $row["NAME"],
