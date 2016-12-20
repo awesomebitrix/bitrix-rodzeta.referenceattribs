@@ -62,7 +62,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 	<table width="100%">
 		<tr>
 			<td class="adm-detail-content-cell-l" width="30%">
-				<label>Инфоблок содержащий "Справочники"</label>
+				<label>Инфоблок содержащий "Каталог" и "Справочники"</label>
 			</td>
 			<td class="adm-detail-content-cell-r" width="70%">
 				<?= GetIBlockDropDownListEx(
