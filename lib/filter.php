@@ -7,7 +7,7 @@
 
 namespace Rodzeta\Referenceattribs;
 
-use Bitrix\Main\{Application, Config\Option};
+use Bitrix\Main\Application;
 
 function Filter($segments, $config = null) {
 	if (is_string($segments)) {
@@ -47,7 +47,8 @@ function Filter($segments, $config = null) {
 		$result[] = ["SECTION_ID" => $ids];
 	}
 
-	$iblockId = Option::get("rodzeta.site", "iblock_content", 1);
+	$currentOptions = Options\Select();
+	$iblockId = $currentOptions["iblock_content"];
 	if (count($selectedGroups)) {
 		$result = [
 			"IBLOCK_ID" => $iblockId,
@@ -61,7 +62,7 @@ function Filter($segments, $config = null) {
 			"INCLUDE_SUBSECTIONS" => "Y",
 		];
 	}
-	if ($currentSectionId != Option::get("rodzeta.site", "section_content", 1)) {
+	if ($currentSectionId != $currentOptions["section_content"]) {
 		$result["ID"] = \CIBlockElement::SubQuery("ID", [
       "IBLOCK_ID" => $iblockId,
       "SECTION_ID" => $currentSectionId,

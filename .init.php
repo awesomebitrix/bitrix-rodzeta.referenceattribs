@@ -230,6 +230,7 @@ function Select() {
 		: [	[], [], [], [] ];
 }
 
+// TODO remove
 function Config() {
 	return include $_SERVER["DOCUMENT_ROOT"] . FILE_ATTRIBS;
 }
