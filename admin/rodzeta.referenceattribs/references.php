@@ -54,9 +54,9 @@ list($attribs) = Select();
 	<textarea name="attribs" style="width:96%;height:260px;"></textarea>
 
 	<ul>
-		<li>Справочники разделяятся пустой строкой</li>
-		<li>значения разделяются символом ";"</li>
-		<li>кодировка UTF-8</li>
+		<li>Справочники разделяются пустой строкой</li>
+		<li>Значения справочников разделяются символом ";"</li>
+		<li>Кодировка файла UTF-8</li>
 	</ul>
 	<a href="<?= URL_ADMIN ?>example.csv">Пример</a>
 
