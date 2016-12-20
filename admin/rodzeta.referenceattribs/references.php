@@ -58,7 +58,7 @@ list($attribs) = Select();
 		<li>Значения справочников разделяются символом ";"</li>
 		<li>Кодировка файла UTF-8</li>
 	</ul>
-	<a href="<?= URL_ADMIN ?>example.csv">Пример</a>
+	Подробнее см. <a href="<?= URL_ADMIN ?>example.csv">пример</a>
 
 	<?php /*
 

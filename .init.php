@@ -41,9 +41,10 @@ function FromImport($attribs) {
 			continue;
 		}
 		$referenceName = array_shift($referenceGroup);
+		$referenceName = array_map("trim", explode(";", $referenceName));
 		$referenceValues = [];
 		foreach ($referenceGroup as $v) {
-			$referenceValues[] = explode(";", $v);
+			$referenceValues[] = array_map("trim", explode(";", $v));
 		}
 		var_dump($referenceName, $referenceValues);
 	}
