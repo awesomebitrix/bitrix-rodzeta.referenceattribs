@@ -13,7 +13,7 @@ function Filter($segments, $config = null) {
 	if (is_string($segments)) {
 		$segments = explode("/", trim($segments, "/"));
 	}
-	list($attribs, $sefCodes, $catalogSections, $values) = Config();
+	list($attribs, $sefCodes, $catalogSections, $values) = Select();
 
 	$filterParams = [];
 	// detect current section url
