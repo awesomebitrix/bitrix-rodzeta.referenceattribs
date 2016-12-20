@@ -20,7 +20,6 @@ if (!$GLOBALS["USER"]->IsAdmin()) {
 }
 
 Loc::loadMessages(__FILE__);
-//Loc::loadMessages($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . ID . "/admin/" . ID . "/index.php");
 
 $app = Application::getInstance();
 $context = $app->getContext();
@@ -31,7 +30,6 @@ StorageInit();
 $formSaved = check_bitrix_sessid() && $request->isPost();
 if ($formSaved) {
 	$errors = Update(FromImport($request->getPost("attribs")));
-	/*
 	if (!empty($errors["BY_ALIAS"])) {
 		\CAdminMessage::showMessage([
 	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", [
@@ -40,7 +38,6 @@ if ($formSaved) {
 	    "TYPE" => "ERROR",
 	  ]);
 	}
-	*/
 }
 
 $currentOptions = Options\Select();

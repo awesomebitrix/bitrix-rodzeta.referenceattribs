@@ -6,4 +6,4 @@ $MESS["RODZETA_REFERENCEATTRIBS_MAIN_TAB_TITLE_SET"] = "Настройка па�
 $MESS["RODZETA_REFERENCEATTRIBS_DATA_TAB_SET"] = "Справочники";
 $MESS["RODZETA_REFERENCEATTRIBS_DATA_TAB_TITLE_SET"] = "Список справочников (файл #FILE#)";
 $MESS["RODZETA_REFERENCEATTRIBS_OPTIONS_SAVED"] = "Настройки сохранены";
-$MESS["RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES"] = "Дубликаты ЧПУ-алиасов #VALUE# были пропущены";
+
