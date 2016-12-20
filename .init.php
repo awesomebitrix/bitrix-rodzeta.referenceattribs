@@ -102,10 +102,6 @@ function FromSections() {
  	return implode("\n", $references);
 }
 
-function ExportCsv() {
-	//...
-}
-
 function Update($attribs) {
 	$sort = function ($a, $b) {
 		return (int)$a["SORT"] <=> (int)$b["SORT"];
