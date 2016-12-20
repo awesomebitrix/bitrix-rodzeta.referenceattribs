@@ -15,7 +15,7 @@
 
 ### Пример использования компонента фильтра со стандартным компонентом "Каталог" ("bitrix:catalog")
 
-См. пример https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/blob/master/examples/section.php#L99
+См. пример https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/blob/master/examples/section.php#L87
 
 - добавить в файл components\bitrix\catalog\catalog\section.php
 ```
