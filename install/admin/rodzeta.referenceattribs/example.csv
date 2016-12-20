@@ -1,14 +1,48 @@
-Справочник1;KOD_SPRAVOCHNIKA;сортировка-справочника
+ПримерСправочник1;KOD_SPRAVOCHNIKA;сортировка-справочника
 Значение1;ЧПУ-алиас1;сортировка
 Значение2;ЧПУ-алиас2;сортировка
 Значение3;ЧПУ-алиас3;сортировка
 
-Страна;COUNTRY;
-Россия;rossiya;100
-Китай;kitai;200
-США;usa;300
+Материал;MATERIAL;100
+Каркасно-кирпичный;karkasno-kirpichnyy;100
+Сруб из бруса;srub-iz-brusa;200
+Блочный;blochnyy;400
+Монолит;monolit;500
+Панельный;panelnyy;600
+Кирпич-монолит;kirpich-monolit;700
+Кирпичный;kirpichnyy;800
+Сруб из бревен;srub-iz-breven;950
+Бумажный;iz-bumagi;1500
 
-Цвет;COLOR;
-зеленый;green;
-красный;red;
-желтый;yellow;
+Страна производителя;COUNTRY;200
+Россия;iz_rossii;100
+Китай;iz_kitaya;200
+
+Бренд;BRAND;300
+Россия;rossiya;100
+Китай;kitay;200
+
+Цвет;COLOR;400
+Желтый;jeltiy;100
+Красный;krasnyy;200
+Зеленый;zelenyy;300
+
+Группы товаров;PRODUCT_GROUP;500
+Акции;offers;100
+Распродажа;sale;200
+Новинки;novelty;400
+
+Тип недвижимости;OBJECT_TYPE;600
+Коттедж;kottedzh;100
+Участок;uchastok;200
+
+Этап строительства;OBJECT_PHASE;700
+Начато строительство;nachato-stroitelstvo;100
+Строительство первых этажей;stroitelstvo-pervykh-etazhey;150
+1 год;1-god;200
+Котлован;kotlovan;300
+Строительство середины здания;stroitelstvo-serediny-zdaniya;400
+Дом построен;dom-postroen;500
+Дом сдан в эксплуатацию;dom-sdan-v-ekspluatatsiyu;600
+Строительство верхних этажей;stroitelstvo-verkhnikh-etazhey;700
+Идут внутренние работы;idut-vnutrennie-raboty;800
