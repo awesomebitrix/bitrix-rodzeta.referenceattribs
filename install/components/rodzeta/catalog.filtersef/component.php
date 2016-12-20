@@ -9,22 +9,22 @@ namespace Rodzeta\Referenceattribs;
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-use Bitrix\Main\Config\Option;
-
 //$path = $this->GetPath();
 
 // $arParams
 
 $arResult["ITEMS"] = [];
 
-list($attribs, $sefCodes, $catalogSections, $values) = Config();
+list($attribs, $sefCodes, $catalogSections, $values) = Select();
 
 $arResult["CURRENT_SECTION_URL"] = $APPLICATION->GetCurPage(false);
 $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = [];
 
-// NOTE code RODZETA_CATALOG_FILTER need for other components parametr $arParams["FILTER_NAME"]
-$GLOBALS["RODZETA_CATALOG_FILTER"] = [];
+// current catalog filter value
+// use for component -> $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
+global $RODZETA_CATALOG_FILTER;
+$RODZETA_CATALOG_FILTER = [];
 
 $currentUrlSegments = array_flip(array_filter(
   explode("/", $arResult["CURRENT_SECTION_URL"])));
@@ -46,7 +46,7 @@ if (defined("ERROR_404")) { // section with filter
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
     $arResult["SELECTED_VALUES"] = $selectedIds;
-    $GLOBALS["RODZETA_CATALOG_FILTER"] = $filter;
+    $RODZETA_CATALOG_FILTER = $filter;
 
     //CHTTP::SetStatus("200 OK");
     /*
