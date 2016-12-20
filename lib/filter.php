@@ -7,8 +7,7 @@
 
 namespace Rodzeta\Referenceattribs;
 
-use \Bitrix\Main\Application;
-use \Bitrix\Main\Config\Option;
+use Bitrix\Main\{Application, Config\Option};
 
 function Filter($segments, $config = null) {
 	if (is_string($segments)) {

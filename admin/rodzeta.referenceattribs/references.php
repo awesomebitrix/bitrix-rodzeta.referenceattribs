@@ -58,7 +58,7 @@ list($attribs) = Select();
 				<th>
 					Выводить в разделах
 					<div class="rodzeta-referenceattribs-sections-src" style="display:none;">
-						<select multiple size="14" style="width:90%;">
+						<select multiple size="14" style="width:96%;">
 							<?php foreach (SectionsTreeList($currentOptions["iblock_content"]) as $optionValue => $optionName) { ?>
 								<option value="<?= $optionValue ?>"><?= $optionName ?></option>
 							<?php } ?>
@@ -71,25 +71,25 @@ list($attribs) = Select();
 		<tbody>
 			<?php foreach (AppendValues($attribs, 1, array_fill(0, 12, null)) as $i => $row) { ?>
 				<tr>
-					<td>
+					<td width="5%">
 						<input type="hidden" name="attribs[<?= $i ?>][SECTION_ID]" value="<?= htmlspecialcharsex($row["SECTION_ID"]) ?>">
 						<input type="text" placeholder="Код атрибута"
 							name="attribs[<?= $i ?>][CODE]"
 							value="<?= htmlspecialcharsex($row["CODE"]) ?>"
-							size="16">
+							style="width:96px;">
 						<br>
 						<input type="text" placeholder="Название"
 							name="attribs[<?= $i ?>][NAME]"
 							value="<?= htmlspecialcharsex($row["NAME"]) ?>"
-							size="16">
+							style="width:96px;">
 						<br>
 						<input type="text" placeholder="Сортировка"
 							name="attribs[<?= $i ?>][SORT]"
 							value="<?= htmlspecialcharsex($row["SORT"]) ?>"
-							size="16">
+							style="width:96px;">
 						<br>
 						<br>
-						<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля для фильтра">
+						<select name="attribs[<?= $i ?>][INPUT_TYPE]" title="Тип поля для фильтра" style="width:96px;">
 							<option value="">CHECKBOX</option>
 							<option value="RADIO" <?= $row["INPUT_TYPE"] == "RADIO"? "selected" : "" ?>>RADIO</option>
 							<option value="SELECT" <?= $row["INPUT_TYPE"] == "SELECT"? "selected" : "" ?>>SELECT</option>
@@ -112,27 +112,27 @@ list($attribs) = Select();
 						</label>
 						<br>
 					</td>
-					<td>
+					<td width="15%">
 						<div class="rodzeta-referenceattribs-sections">
 							<input type="text" style="display:none;"
 								name="attribs[<?= $i ?>][SECTIONS]" value="<?= htmlspecialcharsex(implode(",", array_keys($row["SECTIONS"]))) ?>">
 						</div>
 					</td>
-					<td nowrap>
+					<td width="80%" nowrap>
 						<?php foreach (AppendValues($row["VALUES"] ?? [], 5, ["", ""]) as $n => $v) { ?>
 							<input type="hidden" name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ID]" value="<?= htmlspecialcharsex($v["ID"]) ?>">
 							<input type="text" placeholder="Значение"
 								name="attribs[<?= $i ?>][VALUES][<?= $n ?>][NAME]"
 								value="<?= htmlspecialcharsex($v["NAME"]) ?>"
-								style="width:35%;">
+								style="width:40%;">
 							<input type="text" placeholder="Алиас (для ЧПУ)"
 								name="attribs[<?= $i ?>][VALUES][<?= $n ?>][ALIAS]"
 								value="<?= htmlspecialcharsex($v["ALIAS"]) ?>"
-								style="width:35%;">
+								style="width:40%;">
 							<input type="text" placeholder="Сортировка"
 								name="attribs[<?= $i ?>][VALUES][<?= $n ?>][SORT]"
 								value="<?= htmlspecialcharsex($v["SORT"]) ?>"
-								style="width:20%;">
+								style="width:60px;">
 							<br>
 						<?php } ?>
 					</td>
