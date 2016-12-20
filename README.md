@@ -3,68 +3,70 @@
 
 ## Описание
 
-Данный модуль представляет собой конструктор атрибутов, который позволяет реализовать характеристики элемента (например товаров) на базе стандартных разделов инфоблоков, а так же использовать данные параметры для реализации ЧПУ-фильтра. Содержит компонент реализующий вывод блока параметров фильтра с перелинковокой возможных значений и подготовку стандартного фильтра bitrix. Данный компонент фильтра совместим с любыми другими компонентами использующими стандартный параметр фильтра bitrix.
+Данный модуль представляет собой конструктор атрибутов, который позволяет реализовать характеристики элемента (например товаров) на базе стандартных разделов инфоблоков, а так же использовать данные параметры для реализации ЧПУ-фильтра. Содержит компонент реализующий вывод блока параметров фильтра с перелинковокой возможных значений и подготовку стандартного фильтра bitrix. Данный компонент фильтра совместим с любыми другими компонентами использующими стандартный параметр фильтра bitrix. Модуль имеет возможность импорта/экспорта атрибутов-справочников в простом текстовом формате.
 
 ## Описание установки и настройки решения
 
-Выберите в настройках модуля (вкладка Настройки) инфоблок для хранения, при сохранении настроек разделы создаются автоматически. Создайте список необходимых атрибутов-справочников и списки их значений через интерфейс редактирования (вкладка Справочники).
+Создайте список необходимых атрибутов-справочников и списки их значений через интерфейс редактирования (кнопка "Свойства-справочники").
 
-Разместите компонент фильтра, перед компонентом вывода раздела или другим использующим стандартный фильтр bitrix.
+Разместите компонент фильтра, перед компонентом вывода раздела или другим использующим стандартный фильтр bitrix. Пример section.php компонента "bitrix:catalog" - )
 
-Настройки справочников хранятся в виде файла с php-массивом, что удобно для версионирования и редактирования программистом. При редактировании файла /upload/.rodzeta.referenceattribs.php через фтп или стандартный файловый менеджер bitrix - нажмите в настройке модуля кнопку "Применить настройки".
+### Пример использования компонента фильтра со стандартным компонентом "Каталог" ("bitrix:catalog")
 
-### Пример использования компонента фильтра со стандартным компонентом "Каталог"
+См. пример https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/blob/master/examples/section.php#L99
 
-добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\section.php) код
-
+- добавить в файл components\bitrix\catalog\catalog\section.php
+```
     if (!empty($GLOBALS["RODZETA_CATALOG_FILTER"])) {
         $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
         $arParams["SHOW_ALL_WO_SECTION"] = "Y";
         $arResult["VARIABLES"]["SECTION_ID"] = null;
         $arResult["VARIABLES"]["SECTION_CODE"] = null;
     }
+```
 
-код должен быть после компонента фильтра, но перед компонентом "bitrix:catalog.section" или другим подобным компонентом,
-см. пример bitrix\modules\rodzeta.referenceattribs\examples\section.php
-
-добавить в шаблоне компонента "Каталог" (например в файл components\bitrix\catalog\catalog\bitrix\catalog.section\.default\result_modifier.php)
-
+- добавить в файл components\bitrix\catalog\catalog\bitrix\catalog.section\.default\result_modifier.php
+```
     if (count($arResult["ITEMS"])) {
         // если есть результат по чпу-фильтру - установить статус OK
         CHTTP::SetStatus("200 OK");
     }
+```
 
-прописать параметр SEF_URL_TEMPLATES в настройках компонента "bitrix:catalog.section"
-
+- прописать параметр SEF_URL_TEMPLATES в настройках компонента "bitrix:catalog.section"
+```
     "SEF_URL_TEMPLATES" => array(
             "sections" => "",
             "section" => "#SECTION_CODE_PATH#/",
             "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
     ...
+```
 
 ### Пример реализации ЧПУ-фильтра - использование без компонента
 
 c явным заданием значений для фильтрации
-
+```
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
-    \Rodzeta\Referenceattribs\Filter([
-        "catalog", // первый элемент - всегда код раздела "Каталог"
-        "red", // значения заданные вручную
-        "green"
-    ]);
+        \Rodzeta\Referenceattribs\Filter([
+            "catalog", // первый элемент - всегда код раздела "Каталог"
+            "red", // значения заданные вручную
+            "green"
+        ]);
+```
 
 или для страниц раздела каталога /catalog/*
-
+```
     list($arrSefFilter, $currentUrl, $currentSectionId, $selectedSections) =
-    \Rodzeta\Referenceattribs\Filter($APPLICATION->GetCurPage(false));
+        \Rodzeta\Referenceattribs\Filter($APPLICATION->GetCurPage(false));
 
     <?$APPLICATION->IncludeComponent(
-    "bitrix:catalog.section",
-    "furniture",
-    array(
-        ...
-        "FILTER_NAME" => "arrSefFilter",
-        ...
+        "bitrix:catalog.section",
+        "furniture",
+        array(
+            ...
+            "FILTER_NAME" => "arrSefFilter",
+            ...
+```
 
 ### Пример для инициализации значений атрибутов в result_modifier.php компонента "Элемент каталога"
 
@@ -72,13 +74,16 @@ c явным заданием значений для фильтрации
 
 ### Пример вывода значений атрибутов в шаблоне компонента "Элемент каталога"
 
+```
     <?php foreach ($arResult["PROPERTIES"] as $code => $v) { ?>
         <div>
             <span><?= $v["NAME"] ?>:</span>
             <?= !is_array($v["VALUE"])?
-                        $v["VALUE"] : implode(", ", $v["VALUE"]) ?> <?= $v["HINT"] ?>
+                    $v["VALUE"] : implode(", ", $v["VALUE"]) ?>
+            <?= $v["HINT"] ?>
         </div>
     <?php } ?>
+```
 
 ## Описание техподдержки и контактных данных
 
