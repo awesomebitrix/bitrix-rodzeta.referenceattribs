@@ -32,7 +32,6 @@ function StorageInit() {
 }
 
 function Update($attribs) {
-	$basePath = $_SERVER["DOCUMENT_ROOT"];
 	$currentOptions = Options\Select();
 	$iblockId = $currentOptions["iblock_content"];
 
@@ -219,7 +218,7 @@ function Update($attribs) {
 		}
 	}
 
-	\Encoding\PhpArray\Write($basePath . FILE_ATTRIBS, [
+	\Encoding\PhpArray\Write(CONFIG . "attribs.php", [
 		$result, $sefCodes, $catalogSections, $values
 	]);
 
