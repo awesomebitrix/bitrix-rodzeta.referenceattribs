@@ -18,7 +18,7 @@ define(__NAMESPACE__ . "\CONFIG",
 	$_SERVER["DOCUMENT_ROOT"] . "/upload/"
 	. (substr($_SERVER["SERVER_NAME"], 0, 4) == "www."?
 			substr($_SERVER["SERVER_NAME"], 4) : $_SERVER["SERVER_NAME"])
-	. "/." . ID);
+	. "/." . ID . "/");
 
 require LIB . "encoding/php-array.php";
 require LIB . "options.php";
@@ -218,7 +218,7 @@ function Update($attribs) {
 		}
 	}
 
-	\Encoding\PhpArray\Write(CONFIG . "attribs.php", [
+	\Encoding\PhpArray\Write(CONFIG . "references.php", [
 		$result, $sefCodes, $catalogSections, $values
 	]);
 
@@ -226,7 +226,7 @@ function Update($attribs) {
 }
 
 function Select() {
-	$fname = CONFIG . "/references.php";
+	$fname = CONFIG . "references.php";
 	return is_readable($fname)? include $fname
 		: [	[], [], [], [] ];
 }
