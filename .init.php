@@ -7,8 +7,6 @@
 
 namespace Rodzeta\Referenceattribs;
 
-use Bitrix\Main\Config\Option;
-
 const ID = "rodzeta.referenceattribs";
 const APP = __DIR__ . "/";
 const LIB = APP  . "lib/";
@@ -30,12 +28,6 @@ function StorageInit() {
 		mkdir($path, 0700, true);
 	}
 }
-
-/*
-function AddReference($row) {
-
-}
-*/
 
 function FromImport($attribs) {
 	$result = [];
