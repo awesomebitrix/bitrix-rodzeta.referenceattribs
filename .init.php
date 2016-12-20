@@ -32,11 +32,20 @@ function StorageInit() {
 }
 
 function FromImport($attribs) {
+	// TODO make attribs structure
 	$result = [];
 	echo "<pre>";
 	foreach (explode("\n\n", $attribs) as $group) {
-		$group = trim($group);
-		var_dump($group);
+		$referenceGroup = array_filter(array_map("trim", explode("\n", trim($group))));
+		if (count($referenceGroup) == 0) {
+			continue;
+		}
+		$referenceName = array_shift($referenceGroup);
+		$referenceValues = [];
+		foreach ($referenceGroup as $v) {
+			$referenceValues[] = explode(";", $v);
+		}
+		var_dump($referenceName, $referenceValues);
 	}
 	echo "</pre>";
 	return $result;
