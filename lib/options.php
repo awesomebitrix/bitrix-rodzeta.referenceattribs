@@ -13,6 +13,7 @@ function Update($data) {
 	$options = [
 		"iblock_content" => $data["iblock_content"],
 		"section_content" => $data["section_content"],
+		"section_references" => $data["section_references"],
 	];
 	\Encoding\PhpArray\Write(CONFIG . "/options.php", $options);
 }
@@ -22,5 +23,6 @@ function Select() {
 	return is_readable($fname)? include $fname : [
 		"iblock_content" => 1,
 		"section_content" => 1,
+		"section_references" => 2,
 	];
 }

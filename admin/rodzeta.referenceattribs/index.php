@@ -73,7 +73,7 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 						"MIN_PERMISSION" => "R",
 					],
 					"",
-					"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));"
+					"RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-catalogsection-id'));RodzetaReferenceattribsUpdate(document.getElementById('rodzeta-referenceattribs-referencessection-id'));"
 				) ?>
 			</td>
 		</tr>
@@ -89,6 +89,19 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 				</select>
 			</td>
 		</tr>
+
+		<tr>
+			<td class="adm-detail-content-cell-l" width="30%">
+				<label>Раздел "Справочники"</label>
+			</td>
+			<td class="adm-detail-content-cell-r" width="70%">
+				<select name="section_references" id="rodzeta-referenceattribs-referencessection-id"
+						data-value="<?= $currentOptions["section_references"] ?>">
+					<option value="">(выберите раздел)</option>
+				</select>
+			</td>
+		</tr>
+
 	</table>
 
 </form>
@@ -116,8 +129,9 @@ function RodzetaReferenceattribsUpdate($selectDest) {
 
 <script>
 
-//RodzetaReferenceattribsUpdate(document.getElementById("rodzeta-referenceattribs-section-id"));
 RodzetaReferenceattribsUpdate(document.getElementById(
 	"rodzeta-referenceattribs-catalogsection-id"));
+RodzetaReferenceattribsUpdate(document.getElementById(
+	"rodzeta-referenceattribs-referencessection-id"));
 
 </script>
