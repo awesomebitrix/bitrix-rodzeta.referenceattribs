@@ -18,7 +18,7 @@ $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = [];
 
 // current catalog filter value
-// use for component "catalog" -> $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
+// use for component ("bitrix:catalog.section") -> $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
 global $RODZETA_CATALOG_FILTER;
 $RODZETA_CATALOG_FILTER = [];
 

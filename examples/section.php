@@ -84,7 +84,7 @@ if ($isFilter)
 ?>
 
 <?php
-// добавляем компонент фильтра
+// FIX добавляем компонент фильтра
 ?>
 <?$APPLICATION->IncludeComponent(
 	"rodzeta:catalog.filtersef",
@@ -96,7 +96,7 @@ if ($isFilter)
 );?>
 
 <?php
-// установка фильтра bitrix для компонента "bitrix:catalog.section"
+// FIX установка фильтра bitrix для компонента "bitrix:catalog.section"
 if (!empty($GLOBALS["RODZETA_CATALOG_FILTER"])) {
 	$arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
 	$arParams["SHOW_ALL_WO_SECTION"] = "Y";
