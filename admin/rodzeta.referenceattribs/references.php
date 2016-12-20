@@ -30,17 +30,17 @@ StorageInit();
 
 $formSaved = check_bitrix_sessid() && $request->isPost();
 if ($formSaved) {
-	//Update($request->getPostList());
+	$errors = Update($request->getPost("attribs"));
 	/*
-	$errors = CreateCache($request->getPost("attribs"));
-		if (!empty($errors["BY_ALIAS"])) {
-			\CAdminMessage::showMessage([
-		    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", [
-					"#VALUE#" => implode(", ", $errors["BY_ALIAS"])
-				]),
-		    "TYPE" => "ERROR",
-		  ]);
-		}*/
+	if (!empty($errors["BY_ALIAS"])) {
+		\CAdminMessage::showMessage([
+	    "MESSAGE" => Loc::getMessage("RODZETA_REFERENCEATTRIBS_ERROR_ALIAS_DUPLICATES", [
+				"#VALUE#" => implode(", ", $errors["BY_ALIAS"])
+			]),
+	    "TYPE" => "ERROR",
+	  ]);
+	}
+	*/
 }
 
 $currentOptions = Options\Select();
