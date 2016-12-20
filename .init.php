@@ -31,9 +31,10 @@ function StorageInit() {
 	}
 }
 
-function CreateCache($attribs) {
+function Update($attribs) {
 	$basePath = $_SERVER["DOCUMENT_ROOT"];
-	$iblockId = Option::get("rodzeta.site", "iblock_content", 1);
+	$currentOptions = Options\Select();
+	$iblockId = $currentOptions["iblock_content"];
 
 	$sort = function ($a, $b) {
 		return (int)$a["SORT"] <=> (int)$b["SORT"];
@@ -60,6 +61,7 @@ function CreateCache($attribs) {
 			"ACTIVE" => "Y",
 	  ]);
 	  if (!empty($mainSectionId)) {
+	  	// TODO set from settings pupup
 	  	Option::set("rodzeta.referenceattribs", "section_id", $mainSectionId);
 	  }
 	} else {
@@ -198,7 +200,7 @@ function CreateCache($attribs) {
 	uasort($result, $sort);
 
 	// get all urls for catalog sections
-	$res = \CIBlockSection::GetByID(Option::get("rodzeta.site", "section_content", 1));
+	$res = \CIBlockSection::GetByID($currentOptions["section_content"]);
 	$sectionCatalog = $res->GetNext();
 	$res = \CIBlockSection::GetList(
 		["SORT" => "ASC"],
