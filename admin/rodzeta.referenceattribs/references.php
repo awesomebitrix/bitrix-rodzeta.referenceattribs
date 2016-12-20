@@ -30,7 +30,7 @@ StorageInit();
 
 $formSaved = check_bitrix_sessid() && $request->isPost();
 if ($formSaved) {
-	$errors = Update($request->getPost("attribs"));
+	$errors = Update(FromImport($request->getPost("attribs")));
 	/*
 	if (!empty($errors["BY_ALIAS"])) {
 		\CAdminMessage::showMessage([
@@ -50,6 +50,17 @@ list($attribs) = Select();
 
 <form action="" method="post">
 	<?= bitrix_sessid_post() ?>
+
+	<textarea name="attribs" style="width:96%;height:260px;"></textarea>
+
+	<ul>
+		<li>Справочники разделяятся пустой строкой</li>
+		<li>значения разделяются символом ";"</li>
+		<li>кодировка UTF-8</li>
+	</ul>
+	<a href="<?= URL_ADMIN ?>example.csv">Пример</a>
+
+	<?php /*
 
 	<table width="100%" class="rodzeta-referenceattribs">
 		<thead>
@@ -147,6 +158,8 @@ list($attribs) = Select();
 		</tbody>
 	</table>
 
+	*/ ?>
+
 </form>
 
 <?php if (0 && $formSaved) { ?>
@@ -170,6 +183,7 @@ list($attribs) = Select();
 
 <?php } ?>
 
+<?php /*
 <style>
 
 table.rodzeta-referenceattribs input,
@@ -228,3 +242,5 @@ BX.ready(function () {
 });
 
 </script>
+
+*/ ?>

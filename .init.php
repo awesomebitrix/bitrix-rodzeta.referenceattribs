@@ -31,7 +31,20 @@ function StorageInit() {
 	}
 }
 
+function FromImport($attribs) {
+	$result = [];
+	echo "<pre>";
+	foreach (explode("\n\n", $attribs) as $group) {
+		$group = trim($group);
+		var_dump($group);
+	}
+	echo "</pre>";
+	return $result;
+}
+
 function Update($attribs) {
+	return [];
+
 	$currentOptions = Options\Select();
 	$iblockId = $currentOptions["iblock_content"];
 
