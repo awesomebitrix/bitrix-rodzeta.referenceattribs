@@ -9,10 +9,6 @@ namespace Rodzeta\Referenceattribs;
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-//$path = $this->GetPath();
-
-// $arParams
-
 $arResult["ITEMS"] = [];
 
 list($attribs, $sefCodes, $catalogSections, $values) = Select();
@@ -22,7 +18,7 @@ $arResult["CURRENT_SECTION_ID"] = null;
 $arResult["SELECTED_VALUES"] = [];
 
 // current catalog filter value
-// use for component -> $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
+// use for component "catalog" -> $arParams["FILTER_NAME"] = "RODZETA_CATALOG_FILTER";
 global $RODZETA_CATALOG_FILTER;
 $RODZETA_CATALOG_FILTER = [];
 
@@ -83,9 +79,5 @@ if (!empty($arResult["CURRENT_SECTION_ID"])) {
     }
   }
 }
-
-//$this->SetResultCacheKeys([
-//  "ID",
-//]);
 
 $this->IncludeComponentTemplate();

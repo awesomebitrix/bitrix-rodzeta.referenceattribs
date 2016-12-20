@@ -64,14 +64,6 @@ class rodzeta_referenceattribs extends CModule {
 	    true, true
     );
 
-    /*
-    // copy example if not exists
-		$fname = $_SERVER["DOCUMENT_ROOT"] . "/upload/." . $this->MODULE_ID . ".php";
-		if (!file_exists($fname)) {
-			copy($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/data/." . $this->MODULE_ID . ".php", $fname);
-		}
-		*/
-
 		return true;
 	}
 
