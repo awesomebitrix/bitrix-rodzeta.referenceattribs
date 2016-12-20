@@ -46,12 +46,14 @@ if ($formSaved) {
 $currentOptions = Options\Select();
 list($attribs) = Select();
 
+$currentReferences = FromSections();
+
 ?>
 
 <form action="" method="post">
 	<?= bitrix_sessid_post() ?>
 
-	<textarea name="attribs" style="width:96%;height:260px;"></textarea>
+	<textarea name="attribs" style="width:96%;height:260px;"><?= $currentReferences ?></textarea>
 
 	<ul>
 		<li>Справочники разделяются пустой строкой</li>

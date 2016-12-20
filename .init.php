@@ -65,7 +65,41 @@ function FromImport($attribs) {
 }
 
 function FromSections() {
-	// TODO get current attribs structure from sections
+	$references = [];
+	$currentOptions = Options\Select();
+	$iblockId = $currentOptions["iblock_content"];
+	$mainSectionId = $currentOptions["section_references"];
+
+	// collect references types
+	$res = \CIBlockSection::GetList(
+		["SORT" => "ASC"],
+		[
+			"IBLOCK_ID" => $iblockId,
+			"SECTION_ID" => $mainSectionId,
+		],
+		true,
+		["*"]
+	);
+	// collect references
+ 	while ($rowReference = $res->GetNext()) {
+ 		$references[] = implode(";", [$rowReference["NAME"], $rowReference["CODE"], $rowReference["SORT"]]);
+ 		// collect values
+ 		$resValue = \CIBlockSection::GetList(
+			["SORT" => "ASC"],
+			[
+				"IBLOCK_ID" => $iblockId,
+				"SECTION_ID" => $rowReference["ID"],
+			],
+			true,
+			["*"]
+		);
+		while ($rowValue = $resValue->GetNext()) {
+			$references[] = implode(";", [$rowValue["NAME"], $rowValue["CODE"], $rowValue["SORT"]]);
+		}
+		$references[] = "";
+	}
+
+ 	return implode("\n", $references);
 }
 
 function ExportCsv() {

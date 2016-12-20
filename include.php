@@ -59,8 +59,8 @@ EventManager::getInstance()->addEventHandler("main", "OnPanelCreate", function (
 		"HREF" => $link,
 		"ICON"  => "bx-panel-site-structure-icon",
 		//"SRC" => URL_ADMIN . "/icon.gif",
-		"TEXT"  => "Импорт свойств-справочников",
-		"ALT" => "Импорт свойств-справочников",
+		"TEXT"  => "Свойства-справочники",
+		"ALT" => "Свойства-справочники",
 		"MAIN_SORT" => 2000,
 		"SORT"      => 310
 	]);
