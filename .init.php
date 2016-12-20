@@ -64,6 +64,14 @@ function FromImport($attribs) {
 	return $result;
 }
 
+function FromSections() {
+	// TODO get current attribs structure from sections
+}
+
+function ExportCsv() {
+	//...
+}
+
 function Update($attribs) {
 	$sort = function ($a, $b) {
 		return (int)$a["SORT"] <=> (int)$b["SORT"];
@@ -129,14 +137,16 @@ function Update($attribs) {
 		foreach ($row["VALUES"] as $i => $v) {
 			$v["NAME"] = trim($v["NAME"]);
 			$v["ALIAS"] = trim($v["ALIAS"]);
+			// reset empty values
 			if ($v["NAME"] == "" || $v["ALIAS"] == "") {
 				unset($row["VALUES"][$i]);
 				continue;
 			}
+			// collect duplicate sef aliases
 			if (isset($sefCodes[$v["ALIAS"]])) {
-				// collect duplicate sef aliases
 				$errors["BY_ALIAS"][] = $row["CODE"] . ": " . $v["ALIAS"];
 			}
+
 			$sefCodes[$v["ALIAS"]] = [$row["CODE"], $i];
 			if ($mainSectionId) {
 				$sectionValue = [];
@@ -145,6 +155,7 @@ function Update($attribs) {
 					"IBLOCK_ID" => $iblockId,
 					"SECTION_ID" => $row["SECTION_ID"],
 				];
+				// get value data by code
 				if (!empty($v["ID"])) {
 					$filterValue["ID"] = $v["ID"];
 					$res = \CIBlockSection::GetList(
@@ -155,8 +166,8 @@ function Update($attribs) {
 					);
 					$sectionValue = $res->GetNext();
 				}
+				// find by ALIAS (CODE)
 				if (empty($sectionValue["ID"])) {
-					// find by CODE = ALIAS
 					unset($filterValue["ID"]);
 					$filterValue["CODE"] = $v["ALIAS"];
 					$res = \CIBlockSection::GetList(
@@ -168,27 +179,30 @@ function Update($attribs) {
 					$sectionValue = $res->GetNext();
 				}
 				$iblockSection = new \CIBlockSection();
-				if (empty($v["SORT"])) {
-					$v["SORT"] = ($i + 1) * 100;
-				}
 				if (empty($sectionValue["ID"])) {
-					$v["ID"] = $iblockSection->Add([
+					$data = [
 					  "IBLOCK_ID" => $iblockId,
 					  "IBLOCK_SECTION_ID" => $row["SECTION_ID"],
 					  "NAME" => $v["NAME"],
 					  "CODE" => $v["ALIAS"],
-					  "SORT" => $v["SORT"],
 						"ACTIVE" => "Y",
-				  ]);
+				  ];
+				  if (!empty($v["SORT"])) {
+				  	$data["SORT"] = $v["SORT"];
+				  }
+					$v["ID"] = $iblockSection->Add($data);
 				} else {
 					$v["ID"] = $sectionValue["ID"];
-					$iblockSection->Update($v["ID"], [
+					$data = [
 					  "IBLOCK_ID" => $iblockId,
 					  "NAME" => $v["NAME"],
 					  "CODE" => $v["ALIAS"],
-					  "SORT" => $v["SORT"],
 						"ACTIVE" => "Y",
-				  ]);
+				  ];
+					if (!empty($v["SORT"])) {
+				  	$data["SORT"] = $v["SORT"];
+				  }
+					$iblockSection->Update($v["ID"], $data);
 				}
 
 				// collect value ids
