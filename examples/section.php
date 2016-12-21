@@ -126,7 +126,7 @@ if (!empty($GLOBALS["RODZETA_CATALOG_FILTER"])) {
 		"SECTION_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
 		"DETAIL_URL" => $arResult["FOLDER"].$arResult["URL_TEMPLATES"]["element"],
 
-		// FIX добавить параметр показывать все при неустановленном разделе
+		// FIX добавить параметр "показывать все при неустановленном разделе"
 		"SHOW_ALL_WO_SECTION" => $arParams["SHOW_ALL_WO_SECTION"],
 	),
 	$component
