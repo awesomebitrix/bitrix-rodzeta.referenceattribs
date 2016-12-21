@@ -19,7 +19,7 @@
 
 ### Пример использования компонента фильтра со стандартным компонентом "Каталог" ("bitrix:catalog")
 
-См. пример https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/blob/master/examples/section.php#L87
+См. пример https://github.com/rivetweb/bitrix-rodzeta.referenceattribs/blob/master/examples/section.php#L59
 
 - добавить в файл components\bitrix\catalog\catalog\section.php
 ```
@@ -46,6 +46,11 @@
             "section" => "#SECTION_CODE_PATH#/",
             "element" => "#SECTION_CODE_PATH#/#ELEMENT_CODE#/",
     ...
+```
+
+- добавить параметр в настройках компонента "bitrix:catalog.section" "показывать все при неустановленном разделе"
+```
+"SHOW_ALL_WO_SECTION" => $arParams["SHOW_ALL_WO_SECTION"],
 ```
 
 ### Пример реализации ЧПУ-фильтра - использование без компонента
