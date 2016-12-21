@@ -74,7 +74,7 @@ if (defined("ERROR_404")) { // section with filter
 // filter params for current section
 if (!empty($arResult["CURRENT_SECTION_ID"])) {
   foreach ($arResult["ITEMS"] as $code => $row) {
-    if (!isset($row["SECTIONS"][$arResult["CURRENT_SECTION_ID"]])) {
+    if (!empty($row["SECTIONS"]) && !isset($row["SECTIONS"][$arResult["CURRENT_SECTION_ID"]])) {
       unset($arResult["ITEMS"][$code]);
     }
   }
