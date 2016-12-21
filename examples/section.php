@@ -103,6 +103,10 @@ if (!empty($GLOBALS["RODZETA_CATALOG_FILTER"])) {
 	$arResult["VARIABLES"]["SECTION_ID"] = null;
 	$arResult["VARIABLES"]["SECTION_CODE"] = null;
 }
+
+// FIX важно - добавить параметр "показывать все при неустановленном разделе" если его нет в коде вызова компонента
+// "SHOW_ALL_WO_SECTION" => $arParams["SHOW_ALL_WO_SECTION"],
+
 ?>
 
 <?

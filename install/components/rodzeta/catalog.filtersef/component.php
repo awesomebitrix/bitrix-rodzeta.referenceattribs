@@ -34,10 +34,15 @@ foreach ($attribs as $code => $row) {
 }
 $arResult["ITEMS"] = $attribs;
 
+$filter = false;
+$currentUrl = null;
+$currentSectionId = null;
+$selectedIds = null;
 if (defined("ERROR_404")) { // section with filter
   // init params for filter
   list($filter, $currentUrl, $currentSectionId, $selectedIds) =
     Filter($arResult["CURRENT_SECTION_URL"]);
+
   if ($filter !== false) {
     $arResult["CURRENT_SECTION_URL"] = $currentUrl;
     $arResult["CURRENT_SECTION_ID"] = $currentSectionId;
@@ -81,3 +86,5 @@ if (!empty($arResult["CURRENT_SECTION_ID"])) {
 }
 
 $this->IncludeComponentTemplate();
+
+return [$filter, $currentUrl, $currentSectionId, $selectedIds];
